@@ -1,0 +1,15 @@
+# 数据集说明 / Dataset Notes
+
+本目录保存 `awesome-dsh-plugins` 的可机器读取资料。它将**已核验的可加载 DSH 扩展**与 GitHub 主题页的**未审核候选**严格分开；请不要将候选 CSV 当成推荐或兼容性清单。
+
+This directory stores machine-readable sources for `awesome-dsh-plugins`. It deliberately separates **verified loadable DSH extensions** from **unreviewed discovery candidates** collected from GitHub topics. Do not treat a candidate CSV as a recommendation or a compatibility list.
+
+| 文件 / File | 含义 / Meaning |
+| --- | --- |
+| `verified-plugins.csv` | 主目录使用的核验数据。每一行有项目、分类、安装/挂载线索、许可证、活动日期、风险级别、核验依据与日期。 / Data behind the main directory: repository, category, install/mount hint, license, activity date, risk level, evidence, and inspection date. |
+| `dsh-plugin-topic-candidates.csv` | 研究期间从 [GitHub `dsh-plugin` 主题](https://github.com/topics/dsh-plugin) 分页页面发现的 **358 个仓库标识**快照。它包括尚未核验、可能误标、相关应用和其他目录。 / A snapshot of **358 repository identifiers** discovered across paginated GitHub topic pages during research. It includes unverified, potentially mis-tagged, related-app, and directory candidates. |
+| `curation-criteria.yaml` | 收录范围、可接受 DSH 原生证据、状态和风险分级。 / Inclusion scope, accepted DSH-native evidence, statuses, and risk levels. |
+
+候选快照用于后续审核，而非“全网完整列表”的声明。GitHub topic 内容与排序会变化；官方页面在本次研究时显示 346 个公共仓库，但分页抓取在时间窗口内发现了 358 个仓库标识，可能受到页面实时变化和相关链接暴露的影响。维护者应逐项依据 manifest、patch、源码入口和可复现安装路径复核，而不是按数量或 topic 直接收录。
+
+The candidate snapshot is for future review, not a claim of a complete web-wide inventory. GitHub topic content and ordering change. The official topic page displayed 346 public repositories during this research, whereas the paginated crawl surfaced 358 repository identifiers during its collection window; this can reflect live changes and related repository links. Review each item through manifests, patches, source entry points, and reproducible mounting instructions rather than topic membership or raw counts.

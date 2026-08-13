@@ -1,0 +1,22 @@
+# Local dependencies and caches
+node_modules/
+.pnpm-store/
+
+# Secrets and local environments
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Local audit artifacts
+*.log
+coverage/
+
+data/topic-snapshot/
+
+# Local source material — never committed
+ref/

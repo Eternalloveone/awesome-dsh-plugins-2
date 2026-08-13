@@ -1,0 +1,41 @@
+# Maintenance Guide
+
+DeepSeek Harness remains in Developer Preview, and the official announcement states that core plugins and APIs will continue to evolve.[1] Treat this directory as a time-bounded verification snapshot, not a permanent installation guarantee. Each update should refresh the candidate pool, verify native DSH loading evidence, and then update both the human-readable directory and machine-readable data.
+
+## Maintenance cadence
+
+| Frequency | Work | Output |
+| --- | --- | --- |
+| Weekly | Review the GitHub `dsh-plugin` topic, DSH releases, and official architecture/migration guidance; sample broken URLs and archived repositories | Updated `last_activity`, `checked_at`, and statuses in `data/verified-plugins.csv` |
+| Each DSH RC or release | Retest representative profile installation, bundle loading, and a minimal startup; focus on `dsh` manifest and patch schema changes | README compatibility warning, upgrade note, or watchlist move |
+| New-plugin pull request | Review public source, loading proof, install command, license, and permission/data flow | Category, risk level, source link, and review record |
+| Security report | Validate minimal evidence; add warning, downgrade, or remove as necessary without exposing sensitive detail | Risk marker, watchlist state, or removal note |
+
+## Useful review commands
+
+Run these only in an **isolated test environment** for a known source. Read the code and pin a version first.
+
+```bash
+# Inspect the plugin tree and patches that a profile will load.
+dsh --profile web --dump-config
+
+# Confirm a dependency exists in a profile after installation.
+dsh plugin --profile web list <package-name> --depth 0
+
+# Inspect package metadata and lifecycle scripts; do not ignore the scripts field.
+pnpm view <package-name> --json
+```
+
+These are not universal installation scripts. For Git sources, prefer a release tag or commit SHA. For local `link:` installs, record the local path, build command, and DSH version. For browser, SSH, IM, cloud search/vision/memory, or API-driven extensions, re-check permissions and data flow against the [safety guide](SECURITY.md).
+
+## Candidate pool and mis-tag handling
+
+The GitHub `dsh-plugin` topic is the community discovery entry point linked by the official DSH page, not a protocol or security validator.[2] Candidate discovery may use the topic, GitHub Search API, project READMEs, package pages, and official documentation. Only projects with native DSH evidence may enter the main directory. Tutorials, launchers, ordinary DeepSeek apps, and other directories remain outside the native section.
+
+If a repository is deleted, private, clearly mis-tagged, lacks a license, has no DSH loading path, or fails under the current DSH release, move it to `watchlist` first. If an entry demonstrates malicious or high-risk supply-chain behavior, remove it from the native list and state only the non-sensitive reason. Do not mirror third-party source, repack unlicensed assets, or include API keys in this repository.
+
+## References
+
+[1] [DeepSeek Harness Developer Preview](https://deepseek.com/harness/en/)
+
+[2] [GitHub Topic: dsh-plugin](https://github.com/topics/dsh-plugin)

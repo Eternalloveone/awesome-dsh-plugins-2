@@ -1,0 +1,53 @@
+schema_version: 1
+last_updated: 2026-08-13
+scope:
+  title: DeepSeek Harness community extensions
+  include:
+    - Public-source projects with reproducible DSH installation or mounting instructions.
+    - Cordis/DSH bundles declared through package.json dsh fields, patch files, or verified apply entry points.
+    - DSH-discoverable skills when explicitly labelled as skills.
+  exclude_from_main_directory:
+    - Projects that merely support the DeepSeek API or DeepSeek models.
+    - Projects relying only on the dsh-plugin/dsh topic as evidence.
+    - Tutorials, launchers, desktop shells, generic libraries, and aggregate lists without a DSH load path.
+    - Projects with no public source, no identifiable purpose, or materially misleading claims.
+verification:
+  required_fields:
+    - repository
+    - url
+    - kind
+    - category
+    - install_or_usage
+    - license
+    - last_activity
+    - verification_source
+    - checked_at
+  accepted_native_evidence:
+    - A documented dsh plugin --profile command.
+    - package.json dsh.bundle or dsh.profile declaration.
+    - cordis.patch.yml or equivalent DSH patch that mounts the project.
+    - A documented Cordis apply entry using DSH-compatible dependencies.
+  labels:
+    verified: Native DSH loading evidence and a reproducible install or mounting path were inspected.
+    skill: A DSH skill path/entry point was inspected; this is not an assertion of native bundle status.
+    watchlist: Related project with incomplete or untested compatibility evidence.
+    related: Ecosystem-adjacent project that is not a DSH-loadable plugin.
+    excluded: Out of scope, unavailable, misleading, or unsafe for inclusion.
+risk_levels:
+  high:
+    - browser session, cookie, or authenticated-page access
+    - SSH, SFTP, remote command execution, or PAM access
+    - external chat/IM channels capable of triggering agents
+    - access to privileged credentials or production infrastructure
+  medium:
+    - external API calls involving prompts, code, images, search, embeddings, or memory
+    - filesystem or workspace reading
+    - task automation or scheduling
+    - use of API keys, budgets, or account balances
+  low:
+    - local UI, TUI, theme, or client display changes without elevated capabilities
+review_policy:
+  - Do not describe a project as secure, official, audited, or production-ready without strong primary evidence.
+  - Preserve the author's installation command and link to the canonical source.
+  - Re-check entries after DSH breaking releases because the project is in developer preview.
+  - Place entries with missing licenses or unclear data flows in watchlist or disclose the uncertainty.
