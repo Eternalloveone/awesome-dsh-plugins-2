@@ -1,8 +1,8 @@
 # awesome-dsh-plugins
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-![Plugins](https://img.shields.io/badge/plugins-51-2563eb)
-![Skills](https://img.shields.io/badge/skills-3-7c3aed)
+![Catalog](https://img.shields.io/badge/catalog-525-2563eb)
+![Verified](https://img.shields.io/badge/verified-54-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
 **English** | [简体中文](README.md)
@@ -11,15 +11,23 @@
 
 DeepSeek Harness is in **Developer Preview** and uses Cordis' “Everything is a plugin” architecture. A DSH profile composes bundles; external extensions commonly declare their loading mechanism through a `dsh` field in `package.json` and a patch file.[1] [2] Test every installation against your own DSH release before relying on it.
 
-**Snapshot: 2026-08-13.** This edition includes **51 native DSH extensions whose source or install manifests were inspected**, **3 DSH skills**, and a topic snapshot of the GitHub discovery pool. The official [`dsh-plugin` topic][3] showed 346 repositories during research, but a topic is not an installation, compatibility, maintenance, or security certification.
+**Snapshot: 2026-08-13.** This edition includes **51 native DSH extensions whose source or install manifests were inspected** and **3 DSH skills**, plus a **full aggregated catalog — [`CATALOG.md`](CATALOG.md), 525 repositories** — merged and deduplicated from GitHub search (`topic:dsh-plugin`, `topic:deepseek-harness`, name search) and several community directories. **Aggregation is not an installation, compatibility, maintenance, or security certification**; only the `✅` verified subset enters the main directory below.[3]
 
 | Navigation | Purpose |
 | --- | --- |
+| [Full aggregated catalog](#full-aggregated-catalog) | **All 525** DSH-related repositories, including unreviewed candidates |
 | [Native DSH extensions](#native-dsh-extensions) | Bundles, Cordis extensions, and Web-client add-ons with verified DSH loading evidence |
 | [DSH skills](#dsh-skills) | Discoverable skills; they are not presented as native Cordis bundles |
 | [Built-in DSH components](#official-built-in-capabilities-not-community-plugins) | Runtime components shipped in the official source tree |
 | [Watchlist and related projects](#watchlist-and-related-projects) | Related but unverified or non-loadable projects |
 | [Safety](#installation-and-safety) | Permission-aware installation guidance |
+
+## Full aggregated catalog
+
+[`CATALOG.md`](CATALOG.md) is the auto-generated **full aggregated catalog**: it merges and deduplicates **every** repository found under the GitHub `dsh-plugin` / `deepseek-harness` topics, name search, the [topic crawl snapshot](data/dsh-plugin-topic-candidates.csv), and several community directories ([bruc3van/awesome-dsh-plugin](https://github.com/bruc3van/awesome-dsh-plugin), [Alex-Yanggg/awesome-DSH-plugin](https://github.com/Alex-Yanggg/awesome-DSH-plugin), [awesome-dsh-plugin/awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin), [AdamPlatin123/awesome-dsh-plugins](https://github.com/AdamPlatin123/awesome-dsh-plugins)). The machine-readable version is [`data/repositories.csv`](data/repositories.csv).
+
+- The pool is a **discovery list**, not a recommendation or compatibility list; only the `✅` verified subset enters the main directory below.
+- Rebuild `CATALOG.md` and `data/repositories.csv` anytime with [scripts/aggregate.py](scripts/aggregate.py) (requires an authenticated `gh` CLI).
 
 ## Native DSH extensions
 
@@ -38,8 +46,8 @@ An entry in this section has at least one verified native signal: a reproducible
 | Extension | Capability | Installation / source | License and caution |
 | --- | --- | --- | --- |
 | [zhu1090093659/dsh-web-ui](https://github.com/zhu1090093659/dsh-web-ui) | Web UI plug-ins and skins: board, Git graph, mobile UI, Token view | `dsh plugin --profile web add @linxin666/dsh-web-ui-all` | BSD-3-Clause; verify the specific package release |
-| [Ericwong5021/dsh-taskboard](https://github.com/Ericwong5021/dsh-taskboard) | Web task board | `dsh plugin --profile <profile> add github:Ericwong5021/dsh-taskboard` | MIT; early-stage project |
-| [GooodWei/dsh-command-context](https://github.com/GooodWei/dsh-command-context) | `/context` token allocation, compaction and cost view | `npx @deepseek-ai/dsh plugin --profile web add github:GooodWei/dsh-command-context` | MIT; no stable release found |
+| [Ericwong5021/dsh-kanban](https://github.com/Ericwong5021/dsh-kanban) | Web task board | `dsh plugin --profile <profile> add github:Ericwong5021/dsh-kanban` | MIT; early-stage project |
+| [GooodWei/context-vista](https://github.com/GooodWei/context-vista) | `/context` token allocation, compaction and cost view | `npx @deepseek-ai/dsh plugin --profile web add github:GooodWei/context-vista` | MIT; no stable release found |
 | [zhaoscsc/dsh-wikilink](https://github.com/zhaoscsc/dsh-wikilink) | Obsidian-style `[[wikilink]]` references | `dsh plugin --profile web add https://github.com/zhaoscsc/dsh-wikilink/archive/refs/heads/main.tar.gz` | MIT; may need re-patching after DSH reinstall |
 | [omdsh-dev/dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode) | Open a workspace in VS Code from the Web UI | `dsh plugin --profile web add https://github.com/omdsh-dev/dsh-open-in-vscode/archive/refs/tags/v0.1.5.tar.gz` | MIT; invokes local editor CLI |
 | [omdsh-dev/dsh-notification](https://github.com/omdsh-dev/dsh-notification) | Desktop turn-completion notifications | `dsh plugin --profile web add https://github.com/omdsh-dev/dsh-notification/archive/refs/heads/main.tar.gz` | MIT; notifications may expose session output |
@@ -158,7 +166,7 @@ Read the detailed [English safety guide](docs/SECURITY.md) or [简体中文安�
 
 Please read the [English contribution guide](docs/CONTRIBUTING.md), [简体中文贡献指南](docs/CONTRIBUTING.zh-CN.md), and [English maintenance guide](docs/MAINTENANCE.md). New native entries must include public source, an exact install or mounting path, native DSH evidence, license information, and a permission/data-flow note.
 
-The machine-readable catalog is [data/verified-plugins.csv](data/verified-plugins.csv). A discovery snapshot from the GitHub topic is preserved in [data/dsh-plugin-topic-candidates.csv](data/dsh-plugin-topic-candidates.csv); it is an **unreviewed candidate pool**, not a recommendation list. Curation rules are in [data/curation-criteria.yaml](data/curation-criteria.yaml). This repository is licensed under [MIT](LICENSE); each listed project retains its own license.
+The machine-readable catalog is [data/verified-plugins.csv](data/verified-plugins.csv) (main directory) and [data/repositories.csv](data/repositories.csv) (full aggregation). A discovery snapshot from the GitHub topic is preserved in [data/dsh-plugin-topic-candidates.csv](data/dsh-plugin-topic-candidates.csv); it is an **unreviewed candidate pool**, not a recommendation list. Curation rules are in [data/curation-criteria.yaml](data/curation-criteria.yaml). The full catalog is rebuilt by [scripts/aggregate.py](scripts/aggregate.py). This repository is licensed under [MIT](LICENSE); each listed project retains its own license.
 
 ## References
 

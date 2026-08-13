@@ -1,8 +1,8 @@
 # awesome-dsh-plugins
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-![Plugins](https://img.shields.io/badge/plugins-51-2563eb)
-![Skills](https://img.shields.io/badge/skills-3-7c3aed)
+![Catalog](https://img.shields.io/badge/catalog-525-2563eb)
+![Verified](https://img.shields.io/badge/verified-54-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
 [English](README.en.md) | **简体中文**
@@ -11,16 +11,24 @@
 
 DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“Everything is a plugin”架构：Profile 组合 Bundle，外部插件通常以 `package.json` 的 `dsh` 字段及 patch 文件声明挂载方式。[1] [2] 因此，本目录中的安装方法和兼容性应在你自己的 DSH 版本上先行验证。
 
-**快照日期：2026-08-13。** 本版收录 **51 个经源码或安装清单核验的原生 DSH 插件**与 **3 个 DSH Skill**；另附 GitHub `dsh-plugin` 主题页的全量候选快照，便于持续审核。官方主题页当时有 346 个候选仓库，标签本身并不代表可安装、可维护或安全。[3]
+**快照日期：2026-08-13。** 本版收录 **51 个经源码或安装清单核验的原生 DSH 插件**与 **3 个 DSH Skill**；同时提供 **全量聚合目录 [`CATALOG.md`](CATALOG.md)（525 个仓库）**，合并了 GitHub 搜索（`topic:dsh-plugin`、`topic:deepseek-harness`、名称搜索）与多个社区目录，去重后得到。**聚合 ≠ 可装载、可兼容、可安全运行**，标签本身并不代表可安装、可维护或安全；只有 `✅` 标记的核验子集才进入本页主目录。[3]
 
 | 导航 | 内容 |
 | --- | --- |
-| [原生插件目录](#原生-dsh-插件) | 按能力分类的可装载 Bundle、Cordis 插件与 Web Client 扩展 |
+| [全量聚合目录](#全量聚合目录) | **525 个** DSH 相关仓库的完整聚合（含未审核候选） |
+| [原生插件目录](#原生-dsh-插件) | 已核验、按能力分类的可装载 Bundle、Cordis 插件与 Web Client 扩展 |
 | [技能与预设](#dsh-技能与预设) | 由 DSH Skill 目录发现的可复用能力 |
 | [官方内置能力](#官方内置能力不是社区插件) | 随 DSH 源码发行的官方运行时构件 |
 | [相关项目与观察名单](#相关项目与观察名单不计入主目录) | 相关但并非已核验原生插件的项目 |
 | [安装与安全](#安装与安全) | 安装惯例、权限提示与审计建议 |
 | [贡献规则](#贡献与维护) | 新项目的提交格式与审核门槛 |
+
+## 全量聚合目录
+
+[`CATALOG.md`](CATALOG.md) 是自动生成的**全量聚合目录**：它把 GitHub `dsh-plugin` / `deepseek-harness` 话题、名称搜索、[`dsh-plugin` 主题页候选快照](data/dsh-plugin-topic-candidates.csv)以及多个社区目录（[bruc3van/awesome-dsh-plugin](https://github.com/bruc3van/awesome-dsh-plugin)、[Alex-Yanggg/awesome-DSH-plugin](https://github.com/Alex-Yanggg/awesome-DSH-plugin)、[awesome-dsh-plugin/awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)、[AdamPlatin123/awesome-dsh-plugins](https://github.com/AdamPlatin123/awesome-dsh-plugins)）中发现的**全部**仓库合并去重。机器可读版本是 [`data/repositories.csv`](data/repositories.csv)。
+
+- 聚合池是**发现清单**，不是推荐或兼容性列表；只有 `✅` 已核验子集进入下方主目录。
+- 用 [scripts/aggregate.py](scripts/aggregate.py) 重新拉取并重建 `CATALOG.md` 与 `data/repositories.csv`（需要 `gh` 登录）。
 
 ## 原生 DSH 插件
 
@@ -39,8 +47,8 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | 插件 | 能力 | 安装或挂载方式 | 许可 / 风险 |
 | --- | --- | --- | --- |
 | [zhu1090093659/dsh-web-ui](https://github.com/zhu1090093659/dsh-web-ui) | Web UI 插件与皮肤合集，包括任务板、Git 图、移动端和 Token 视图 | `dsh plugin --profile web add @linxin666/dsh-web-ui-all` | BSD-3-Clause；以各子包发布状态为准 |
-| [Ericwong5021/dsh-taskboard](https://github.com/Ericwong5021/dsh-taskboard) | DSH Web UI 任务看板 | `dsh plugin --profile <profile> add github:Ericwong5021/dsh-taskboard` | MIT；早期项目，建议本地回归测试 |
-| [GooodWei/dsh-command-context](https://github.com/GooodWei/dsh-command-context) | `/context` 上下文占用、压缩与费用视图 | `npx @deepseek-ai/dsh plugin --profile web add github:GooodWei/dsh-command-context` | MIT；未发布稳定版本 |
+| [Ericwong5021/dsh-kanban](https://github.com/Ericwong5021/dsh-kanban) | DSH Web UI 任务看板 | `dsh plugin --profile <profile> add github:Ericwong5021/dsh-kanban` | MIT；早期项目，建议本地回归测试 |
+| [GooodWei/context-vista](https://github.com/GooodWei/context-vista) | `/context` 上下文占用、压缩与费用视图 | `npx @deepseek-ai/dsh plugin --profile web add github:GooodWei/context-vista` | MIT；未发布稳定版本 |
 | [zhaoscsc/dsh-wikilink](https://github.com/zhaoscsc/dsh-wikilink) | Obsidian 风格 `[[wikilink]]`，引用笔记到提示词 | `dsh plugin --profile web add https://github.com/zhaoscsc/dsh-wikilink/archive/refs/heads/main.tar.gz` | MIT；重装 DSH 后可能需重打补丁 |
 | [omdsh-dev/dsh-open-in-vscode](https://github.com/omdsh-dev/dsh-open-in-vscode) | 从 Web UI 直接在 VS Code 打开工作区 | `dsh plugin --profile web add https://github.com/omdsh-dev/dsh-open-in-vscode/archive/refs/tags/v0.1.5.tar.gz` | MIT；会调用本机编辑器 CLI |
 | [omdsh-dev/dsh-notification](https://github.com/omdsh-dev/dsh-notification) | Turn 完成时的桌面通知与规则过滤 | `dsh plugin --profile web add https://github.com/omdsh-dev/dsh-notification/archive/refs/heads/main.tar.gz` | MIT；通知可能泄露会话标题或输出摘要 |
@@ -175,7 +183,7 @@ npx @deepseek-ai/dsh web
 
 欢迎提交新增插件、兼容性报告和失效链接修复。请先阅读 [贡献指南](docs/CONTRIBUTING.zh-CN.md) 和 [维护手册](docs/MAINTENANCE.zh-CN.md)。提交一个新条目时，必须给出公开源码、精确安装方法、DSH 原生证据、许可和风险说明；仅凭 GitHub topic、DeepSeek API 支持或宣传文案的项目会进入观察名单，而不是主目录。
 
-本仓库的插件数据为可机器读取的 [data/verified-plugins.csv](data/verified-plugins.csv)，主题页的未审核发现快照位于 [data/dsh-plugin-topic-candidates.csv](data/dsh-plugin-topic-candidates.csv)，其口径见 [数据集说明](data/README.md)。审查标准在 [data/curation-criteria.yaml](data/curation-criteria.yaml)。本仓库内容以 [MIT License](LICENSE) 发布；各收录项目仍受其自身许可证约束。
+本仓库的插件数据为可机器读取的 [data/verified-plugins.csv](data/verified-plugins.csv)（主目录）与 [data/repositories.csv](data/repositories.csv)（全量聚合），主题页的未审核发现快照位于 [data/dsh-plugin-topic-candidates.csv](data/dsh-plugin-topic-candidates.csv)，其口径见 [数据集说明](data/README.md)。审查标准在 [data/curation-criteria.yaml](data/curation-criteria.yaml)。全量目录由 [scripts/aggregate.py](scripts/aggregate.py) 自动重建。本仓库内容以 [MIT License](LICENSE) 发布；各收录项目仍受其自身许可证约束。
 
 ## 参考资料
 

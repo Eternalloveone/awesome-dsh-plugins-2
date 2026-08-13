@@ -34,6 +34,16 @@ GitHub `dsh-plugin` topic 是官方网页给出的社区发现入口，但它不
 
 如果仓库被删除、转私有、明显误标、没有许可、没有 DSH 挂载方式，或在当前 DSH 版本中无法加载，优先标记为 `watchlist`。如确认存在恶意或高危供应链行为，应删除主目录链接并记录非敏感原因。不要在本仓库中复刻第三方插件源码、打包其未授权资产或传播 API Key。
 
+## 全量目录刷新
+
+[`CATALOG.md`](../CATALOG.md) 与 [`data/repositories.csv`](../data/repositories.csv) 由聚合脚本生成：它合并 GitHub 搜索（`topic:dsh-plugin`、`topic:deepseek-harness`、名称搜索）、本地主题快照与外部社区目录。每次快照前请重新生成（需要已登录的 `gh` CLI）：
+
+```bash
+python3 scripts/aggregate.py
+```
+
+聚合输出是**发现清单**而非审核结论：每个候选仍须按本手册的标准逐项复核后才能进入已核验子集。
+
 ## 参考资料
 
 [1] [DeepSeek Harness Developer Preview](https://deepseek.com/harness/en/)
