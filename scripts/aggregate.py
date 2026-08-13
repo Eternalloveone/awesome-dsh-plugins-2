@@ -206,6 +206,13 @@ VERIFIED_CAT_MAP = {
     "security_audit": "diagnostics", "session_diagnostics": "diagnostics",
     "skill": "skills", "developer_skills": "skills", "plugin_development_skill": "skills",
     "game": "fun",
+    # identity mappings for canonical categories (used by rows added by the audit)
+    "vision": "vision", "web_ui": "web_ui", "tui": "tui", "session_chat": "session_chat",
+    "search_browser": "search_browser", "automation": "automation",
+    "memory_persona": "memory_persona", "communication": "communication",
+    "remote_device": "remote_device", "developer_tools": "developer_tools",
+    "data_tools": "data_tools", "diagnostics": "diagnostics", "fun": "fun",
+    "skills": "skills", "ecosystem": "ecosystem", "uncategorized": "uncategorized",
 }
 
 BRUC3VAN_CAT_MAP = {

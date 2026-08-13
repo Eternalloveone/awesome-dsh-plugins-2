@@ -42,6 +42,16 @@ python3 scripts/aggregate.py
 
 The output is a discovery universe, not a review result: re-check every candidate against the criteria in this guide before moving it into the verified subset.
 
+## Batch audit of candidates
+
+To review a large candidate pool at once (as done on 2026-08-14 for 417 repos):
+
+1. Run `python3 scripts/aggregate.py` to refresh the candidate universe.
+2. Fan out per-repo checks (README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`) against the criteria in [`CONTRIBUTING.md`](CONTRIBUTING.md); record verdicts in `data/audit-results.csv`.
+3. Promote verified verdicts into `data/verified-plugins.csv` (fill `capability` and `caution`), then run `python3 scripts/insert_verified_into_readme.py` to append rows to both READMEs, and `python3 scripts/aggregate.py` to rebuild `CATALOG.md` and `data/repositories.csv`.
+
+A verdict is a documented load path — an install command or a `dsh`/Cordis mount declaration — not a runtime test or a security audit.
+
 If a repository is deleted, private, clearly mis-tagged, lacks a license, has no DSH loading path, or fails under the current DSH release, move it to `watchlist` first. If an entry demonstrates malicious or high-risk supply-chain behavior, remove it from the native list and state only the non-sensitive reason. Do not mirror third-party source, repack unlicensed assets, or include API keys in this repository.
 
 ## References

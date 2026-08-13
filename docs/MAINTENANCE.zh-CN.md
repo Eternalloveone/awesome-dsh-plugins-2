@@ -44,6 +44,16 @@ python3 scripts/aggregate.py
 
 聚合输出是**发现清单**而非审核结论：每个候选仍须按本手册的标准逐项复核后才能进入已核验子集。
 
+## 批量审计候选
+
+需要一次性复核大批候选时（2026-08-14 曾对 417 个仓库执行）：
+
+1. 运行 `python3 scripts/aggregate.py` 刷新候选池。
+2. 按 [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md) 的标准逐仓库核验（README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`），把判定写入 `data/audit-results.csv`。
+3. 将符合条件者提升进 `data/verified-plugins.csv`（填写 `capability` 与 `caution`），再依次运行 `python3 scripts/insert_verified_into_readme.py`（向两个 README 追加行）与 `python3 scripts/aggregate.py`（重建 `CATALOG.md` 与 `data/repositories.csv`）。
+
+判定依据是**有文档可循的装载路径**（安装命令或 `dsh`/Cordis 挂载声明），不是运行测试，也不代表安全审计。
+
 ## 参考资料
 
 [1] [DeepSeek Harness Developer Preview](https://deepseek.com/harness/en/)
