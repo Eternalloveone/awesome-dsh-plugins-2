@@ -5,7 +5,7 @@
 ![Verified](https://img.shields.io/badge/verified-54-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
-**English** | [简体中文](README.md)
+**English** | [简体中文](README.md) | [🌐 Website](https://deepseekharnessplugins.com)
 
 > A curated, evidence-led directory for [DeepSeek Harness (DSH)][1]. It distinguishes loadable Cordis/DSH extensions from skills, launchers, ordinary DeepSeek applications, and projects that only added a GitHub topic.
 

@@ -5,7 +5,7 @@
 ![Verified](https://img.shields.io/badge/verified-54-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
-[English](README.en.md) | **简体中文**
+[English](README.en.md) | **简体中文** | [🌐 网站](https://deepseekharnessplugins.com)
 
 > 一个面向 [DeepSeek Harness（DSH）][1] 的精选插件目录。项目优先收录**可由 DSH Profile 装载**、具备可复现安装说明且源码公开的社区扩展；技能、预设与相关应用会明确区分，不把“使用 DeepSeek API”或仅贴有 `dsh-plugin` 标签的项目误当作原生插件。
 
