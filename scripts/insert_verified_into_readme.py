@@ -88,18 +88,20 @@ def build_rows(rows, lang):
         cap = esc(r.get("capability"))
         if not cap:
             continue
-        install = (r.get("install_or_usage") or "").strip()
-        lic = r.get("license") or ""
+        # collapse embedded newlines (multi-line YAML snippets) and escape pipes
+        install = re.sub(r"\s*\n\s*", "; ", (r.get("install_or_usage") or "")).strip()
+        install = esc(install)
+        lic = esc(r.get("license"))
         caution = esc(r.get("caution"))
-        if lang == "cn":
-            plain = re.search(r"(see README|见 README)", install)
-            inst = install if plain else f"`{install}`"
-            lic_txt = "未发现" if lic.lower() in ("not found", "none") else lic
-            cell = f"{lic_txt}；{caution}" if caution else licence_text(lic, lang)
+        if "`" in install or re.search(r"see README|见 README", install, re.I):
+            inst = install  # already contains code framing or is a mount pointer
         else:
-            plain = re.search(r"see README", install, re.I)
-            inst = install if plain else f"`{install}`"
-            cell = f"{lic}; {caution}" if caution else f"{lic}"
+            inst = f"`{install}`"
+        if lang == "cn":
+            lic_txt = "未发现" if lic.lower() in ("not found", "none") else lic
+            cell = f"{lic_txt}；{caution}" if caution else lic_txt
+        else:
+            cell = f"{lic}; {caution}" if caution else lic
         out.append(f"| [{repo}]({r['url']}) | {cap} | {inst} | {cell} |")
     return out
 
