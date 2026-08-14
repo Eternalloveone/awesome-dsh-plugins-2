@@ -44,7 +44,7 @@ The output is a discovery universe, not a review result: re-check every candidat
 
 ## Batch audit of candidates
 
-To review a large candidate pool at once (as done on 2026-08-14 for 417 repos):
+To review a large candidate pool at once (as done on 2026-08-14, when two full audits covered 1,363 candidates — an initial 417 + 946 new candidates from a fresh topic crawl):
 
 1. Run `python3 scripts/aggregate.py` to refresh the candidate universe.
 2. Fan out per-repo checks (README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`) against the criteria in [`CONTRIBUTING.md`](CONTRIBUTING.md); record verdicts in `data/audit-results.csv`.

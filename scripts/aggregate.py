@@ -116,8 +116,16 @@ def fetch_repo(full_name, tries=4):
 
 
 def search_page(query, page):
-    raw = gh("-X", "GET", "search/repositories",
-             "-f", f"q={query}", "-f", "per_page=100", "-f", f"page={page}")
+    try:
+        raw = gh("-X", "GET", "search/repositories",
+                 "-f", f"q={query}", "-f", "per_page=100", "-f", f"page={page}")
+    except RuntimeError as e:
+        # GitHub caps search at the first 1000 results per query (HTTP 422);
+        # stop paginating quietly instead of aborting the whole run.
+        if "Only the first 1000" in str(e) or "422" in str(e):
+            print(f"  search {query!r} page {page}: cap reached (1000 results)")
+            return {"items": []}
+        raise
     return json.loads(raw)
 
 

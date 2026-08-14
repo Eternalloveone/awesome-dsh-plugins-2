@@ -46,7 +46,7 @@ python3 scripts/aggregate.py
 
 ## 批量审计候选
 
-需要一次性复核大批候选时（2026-08-14 曾对 417 个仓库执行）：
+需要一次性复核大批候选时（2026-08-14 曾执行两轮全量审计，共 1363 个候选仓库：首轮 417 个 + 重新抓取主题页后新增的 946 个）：
 
 1. 运行 `python3 scripts/aggregate.py` 刷新候选池。
 2. 按 [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md) 的标准逐仓库核验（README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`），把判定写入 `data/audit-results.csv`。
