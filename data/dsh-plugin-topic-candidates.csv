@@ -1996,3 +1996,14 @@ syncable-dev/memtrace-public,dsh-plugin,verified_plugin
 salathleizhang/deepseek-harness-desktop,dsh-plugin,watchlist
 geml-spec/geml,dsh-plugin,related
 G36maid/deepseek-harness,dsh-plugin,related
+alvinunreal/openpets,dsh-plugin,verified_plugin
+ZJU-LLMs/OpenStory,dsh-plugin,verified_plugin
+wssfk12138/dsh-damage-pulse,dsh-plugin,verified_plugin
+Aisland-SJL/dsh-reminder,dsh-plugin,verified_plugin
+esengine/DeepSeek-Reasonix,dsh-plugin,related
+EverMind-AI/EverOS,dsh-plugin,related
+MemTensor/memmy-agent,dsh-plugin,related
+alibaba/anolisa,dsh-plugin,related
+chuspeeism/dashi-taskboard,dsh-plugin,rejected
+Jesseovo/last30days-skill-cn,dsh-plugin,rejected
+yzlnew/infra-skills,dsh-plugin,rejected
