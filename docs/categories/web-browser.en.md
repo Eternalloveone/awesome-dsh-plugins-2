@@ -1,4 +1,4 @@
-# Web & Browser / 网页与浏览器
+## Web & Browser
 
 > Corresponding category on the site: [Web & Browser](https://deepseekharnessplugins.com/plugins/category/web-browser)
 

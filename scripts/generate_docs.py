@@ -6,7 +6,8 @@ Reads data/verified-plugins.csv and:
      the companion site's 22 categories
      (deepseekharnessplugins.com/plugins/categories). Each page carries a link to
      the matching site category at the top and the FULL list of verified repos in
-     that category.
+     that category. The page's h2 title equals the site's SECTION_MAP key
+     (merge.ts) so the site's parser can consume the page unchanged.
   2. Rewrites the "Verified directory" region of README.md / README.en.md into a
      compact index: navigation + the top-N most-recently-active repos per category,
      with a "view full list ->" link to the category page.
@@ -183,14 +184,17 @@ def load():
 def build_category_doc(cid, zh, en, rows, lang):
     site_url = f"{SITE}/plugins/category/{cid}"
     if lang == "cn":
-        title = f"# {zh} / {en}"
+        # h2 title == EXACT SECTION_MAP key used by the companion site's parser
+        # (merge.ts) so the page can be consumed as-is; the EN name lives in the
+        # site-link line below.
+        title = f"## {zh}"
         link = f"> 对应网站分类：[{zh} · {en}]({site_url})"
         hdr = ("| 插件 | 能力 | 安装或挂载方式 | 许可 / 风险 |",
                "| --- | --- | --- | --- |")
         empty = "> 暂无已核验条目。"
         footer = "← [返回 README](../../README.md)"
     else:
-        title = f"# {en} / {zh}"
+        title = f"## {en}"
         link = f"> Corresponding category on the site: [{en}]({site_url})"
         hdr = ("| Plugin | Capability | Install or mount | License / Risk |",
                "| --- | --- | --- | --- |")

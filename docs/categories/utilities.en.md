@@ -1,4 +1,4 @@
-# Other / 其他
+## Other
 
 > Corresponding category on the site: [Other](https://deepseekharnessplugins.com/plugins/category/utilities)
 

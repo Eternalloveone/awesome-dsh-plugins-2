@@ -1,4 +1,4 @@
-# 知识与研究 / Knowledge & Research
+## 知识与研究
 
 > 对应网站分类：[知识与研究 · Knowledge & Research](https://deepseekharnessplugins.com/plugins/category/knowledge-research)
 

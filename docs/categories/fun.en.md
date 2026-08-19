@@ -1,4 +1,4 @@
-# Just for Fun / 纯属好玩
+## Just for Fun
 
 > Corresponding category on the site: [Just for Fun](https://deepseekharnessplugins.com/plugins/category/fun)
 

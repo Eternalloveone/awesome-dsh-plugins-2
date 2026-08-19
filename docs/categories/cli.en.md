@@ -1,4 +1,4 @@
-# CLI & Terminal / 命令行与终端
+## CLI & Terminal
 
 > Corresponding category on the site: [CLI & Terminal](https://deepseekharnessplugins.com/plugins/category/cli)
 

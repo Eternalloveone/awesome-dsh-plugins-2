@@ -1,4 +1,4 @@
-# Design, Media & Vision / 设计、媒体与视觉
+## Design, Media & Vision
 
 > Corresponding category on the site: [Design, Media & Vision](https://deepseekharnessplugins.com/plugins/category/media-vision)
 

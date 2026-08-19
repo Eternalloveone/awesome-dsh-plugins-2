@@ -1,4 +1,4 @@
-# Usage & Billing / 用量与计费
+## Usage & Billing
 
 > Corresponding category on the site: [Usage & Billing](https://deepseekharnessplugins.com/plugins/category/billing)
 

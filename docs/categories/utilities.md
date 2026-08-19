@@ -1,4 +1,4 @@
-# 其他 / Other
+## 其他
 
 > 对应网站分类：[其他 · Other](https://deepseekharnessplugins.com/plugins/category/utilities)
 

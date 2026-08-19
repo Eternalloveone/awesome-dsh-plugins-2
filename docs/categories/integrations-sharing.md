@@ -1,4 +1,4 @@
-# 集成与分享 / Integrations & Sharing
+## 集成与分享
 
 > 对应网站分类：[集成与分享 · Integrations & Sharing](https://deepseekharnessplugins.com/plugins/category/integrations-sharing)
 

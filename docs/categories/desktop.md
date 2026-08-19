@@ -1,4 +1,4 @@
-# 桌面与应用 / Desktop & Apps
+## 桌面与应用
 
 > 对应网站分类：[桌面与应用 · Desktop & Apps](https://deepseekharnessplugins.com/plugins/category/desktop)
 

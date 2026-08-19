@@ -1,4 +1,4 @@
-# Sessions & Messages / 会话与消息
+## Sessions & Messages
 
 > Corresponding category on the site: [Sessions & Messages](https://deepseekharnessplugins.com/plugins/category/sessions-messages)
 

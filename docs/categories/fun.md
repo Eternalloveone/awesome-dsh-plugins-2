@@ -1,4 +1,4 @@
-# 纯属好玩 / Just for Fun
+## 纯属好玩
 
 > 对应网站分类：[纯属好玩 · Just for Fun](https://deepseekharnessplugins.com/plugins/category/fun)
 

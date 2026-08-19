@@ -1,4 +1,4 @@
-# 安全与鉴权 / Security & Auth
+## 安全与鉴权
 
 > 对应网站分类：[安全与鉴权 · Security & Auth](https://deepseekharnessplugins.com/plugins/category/security)
 

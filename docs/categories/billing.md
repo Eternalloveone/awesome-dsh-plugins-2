@@ -1,4 +1,4 @@
-# 用量与计费 / Usage & Billing
+## 用量与计费
 
 > 对应网站分类：[用量与计费 · Usage & Billing](https://deepseekharnessplugins.com/plugins/category/billing)
 

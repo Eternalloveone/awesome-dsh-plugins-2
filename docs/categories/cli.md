@@ -1,4 +1,4 @@
-# 命令行与终端 / CLI & Terminal
+## 命令行与终端
 
 > 对应网站分类：[命令行与终端 · CLI & Terminal](https://deepseekharnessplugins.com/plugins/category/cli)
 

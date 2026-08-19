@@ -1,4 +1,4 @@
-# MCP 与协议 / MCP & Protocols
+## MCP 与协议
 
 > 对应网站分类：[MCP 与协议 · MCP & Protocols](https://deepseekharnessplugins.com/plugins/category/mcp)
 

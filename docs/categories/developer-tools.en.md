@@ -1,4 +1,4 @@
-# Developer Tools / 开发者工具
+## Developer Tools
 
 > Corresponding category on the site: [Developer Tools](https://deepseekharnessplugins.com/plugins/category/developer-tools)
 

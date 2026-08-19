@@ -1,4 +1,4 @@
-# Ecosystem & Resources / 生态与资源
+## Ecosystem & Resources
 
 > Corresponding category on the site: [Ecosystem & Resources](https://deepseekharnessplugins.com/plugins/category/ecosystem-resources)
 

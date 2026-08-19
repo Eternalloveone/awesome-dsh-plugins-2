@@ -1,4 +1,4 @@
-# Integrations & Sharing / 集成与分享
+## Integrations & Sharing
 
 > Corresponding category on the site: [Integrations & Sharing](https://deepseekharnessplugins.com/plugins/category/integrations-sharing)
 

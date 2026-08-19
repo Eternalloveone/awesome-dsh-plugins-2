@@ -1,4 +1,4 @@
-# 开发者工具 / Developer Tools
+## 开发者工具
 
 > 对应网站分类：[开发者工具 · Developer Tools](https://deepseekharnessplugins.com/plugins/category/developer-tools)
 

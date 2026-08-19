@@ -1,4 +1,4 @@
-# Voice & Speech / 语音
+## Voice & Speech
 
 > Corresponding category on the site: [Voice & Speech](https://deepseekharnessplugins.com/plugins/category/voice)
 

@@ -1,4 +1,4 @@
-# Security & Auth / 安全与鉴权
+## Security & Auth
 
 > Corresponding category on the site: [Security & Auth](https://deepseekharnessplugins.com/plugins/category/security)
 

@@ -1,4 +1,4 @@
-# 清单与资源 / Lists & Resources
+## 清单与资源
 
 > 对应网站分类：[清单与资源 · Lists & Resources](https://deepseekharnessplugins.com/plugins/category/lists)
 

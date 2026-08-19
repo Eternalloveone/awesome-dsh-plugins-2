@@ -1,4 +1,4 @@
-# UI & Experience / 界面与体验
+## UI & Experience
 
 > Corresponding category on the site: [UI & Experience](https://deepseekharnessplugins.com/plugins/category/ui-experience)
 

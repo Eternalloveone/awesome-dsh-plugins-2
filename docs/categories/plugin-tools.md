@@ -1,4 +1,4 @@
-# 插件工具 / Plugin Tooling
+## 插件工具
 
 > 对应网站分类：[插件工具 · Plugin Tooling](https://deepseekharnessplugins.com/plugins/category/plugin-tools)
 

@@ -1,4 +1,4 @@
-# Web UI & Frontend / Web 界面与前端
+## Web UI & Frontend
 
 > Corresponding category on the site: [Web UI & Frontend](https://deepseekharnessplugins.com/plugins/category/web-ui)
 

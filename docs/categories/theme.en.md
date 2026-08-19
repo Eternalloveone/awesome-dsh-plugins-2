@@ -1,4 +1,4 @@
-# Themes & Skins / 主题与皮肤
+## Themes & Skins
 
 > Corresponding category on the site: [Themes & Skins](https://deepseekharnessplugins.com/plugins/category/theme)
 

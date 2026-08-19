@@ -1,4 +1,4 @@
-# 聊天与 IM / Chat & IM
+## 聊天与 IM
 
 > 对应网站分类：[聊天与 IM · Chat & IM](https://deepseekharnessplugins.com/plugins/category/chat-im)
 

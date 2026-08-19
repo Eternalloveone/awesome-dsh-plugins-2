@@ -1,4 +1,4 @@
-# Agents, Automation & Workflows / Agent、自动化与工作流
+## Agents, Automation & Workflows
 
 > Corresponding category on the site: [Agents, Automation & Workflows](https://deepseekharnessplugins.com/plugins/category/agents-workflows)
 
