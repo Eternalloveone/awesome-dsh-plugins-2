@@ -1,0 +1,71 @@
+# 其他 / Other
+
+> 对应网站分类：[其他 · Other](https://deepseekharnessplugins.com/plugins/category/utilities)
+
+| 插件 | 能力 | 安装或挂载方式 | 许可 / 风险 |
+| --- | --- | --- | --- |
+| [ZJU-LLMs/OpenStory](https://github.com/ZJU-LLMs/OpenStory) | Multi-agent story-world simulation registered as a DSH tool. | `npx -y @deepseek-ai/dsh plugin --profile web add dsh-openstory@0.2.0` | MIT；Heavy install (needs Redis + Python 3.11-3.13 + full source checkout). Freshly published; may trip DSH ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION supply-chain guard - wait and retry, do not disable the policy. |
+| [zuorn/Tydora](https://github.com/zuorn/Tydora) | Tauri v2 桌面 Markdown 编辑器（WYSIWYG/双向链接/思维导图/无限画布），仓库声明 dsh.bundle 补丁挂载最小 DSH 插件骨架 | see README（桌面应用，Release 安装）; DSH 装载：dsh plugin add 时应用 package.json dsh.bundle → cordis.patch.yml 补丁 | Apache-2.0；DSH 入口 dsh/index.ts 为最小可加载骨架，当前不注册任何能力；仓库主体是独立的桌面 Markdown 编辑器 |
+| [030611/dsh-context-provenance](https://github.com/030611/dsh-context-provenance) | Observe-only plugin tagging adjacent request evidence as Observed/Estimated/Unavailable without altering output. | `` | N/A |
+| [030611/dsh-telemetry-redactor](https://github.com/030611/dsh-telemetry-redactor) | DSH 遥测数据脱敏插件，对上报/日志中的敏感字段做编辑后处理。 | `` | N/A |
+| [030611/dsh-verification-receipt](https://github.com/030611/dsh-verification-receipt) | DSH 验证回执插件，为关键操作生成可审计的验证凭证。 | `` | N/A |
+| [0lidaxiang/dsh-plugin-greet](https://github.com/0lidaxiang/dsh-plugin-greet) | greet 工具示例插件 | `` | MIT |
+| [1624318455/dsh-plugin-tts](https://github.com/1624318455/dsh-plugin-tts) | DSH 文本转语音（TTS）插件，提供语音合成输出。 | `` | MIT |
+| [3274375092/dsh-voice](https://github.com/3274375092/dsh-voice) | DSH 语音输入/语音交互插件。 | `` | MIT |
+| [610la/dsh-notification-center](https://github.com/610la/dsh-notification-center) | DSH 通知中心插件（浏览器系统通知 + 21 种匹配音效） | `` | MIT |
+| [940842546/dsh-usage-billing](https://github.com/940842546/dsh-usage-billing) | 用量与消费统计 | `` | MIT |
+| [acidmoon/dizzy-dsh](https://github.com/acidmoon/dizzy-dsh) | DSH 扩展包（dizzy），具体能力需查看源码确认。 | `` | N/A |
+| [asdf17128/dsh-doctor](https://github.com/asdf17128/dsh-doctor) | DSH 自检/诊断插件，检查配置与环境健康。 | `` | N/A |
+| [ben7am1n/dsh-claude-marketplace](https://github.com/ben7am1n/dsh-claude-marketplace) | DSH 插件市场，可在 DSH 内浏览/安装 Claude 技能类扩展。 | `` | N/A |
+| [benzhoupo/dsh-effort-config](https://github.com/benzhoupo/dsh-effort-config) | DSH 推理强度（effort）配置插件，调节模型推理投入。 | `` | N/A |
+| [bradeGithub/DSH-Plugins-Marketplace](https://github.com/bradeGithub/DSH-Plugins-Marketplace) | DSH 插件市场，提供插件浏览/安装入口。 | `` | N/A |
+| [CH4ACKO3/dsh-harmony](https://github.com/CH4ACKO3/dsh-harmony) | Runtime patch framework that modifies other DSH plugins via source patches. | `` | MIT |
+| [chaos-03x/dsh-agy](https://github.com/chaos-03x/dsh-agy) | Google Antigravity OAuth adapter for DSH (multi-account, 429 rotation). | `` | N/A |
+| [cokiscarazo-rgb/dsh-session-management](https://github.com/cokiscarazo-rgb/dsh-session-management) | 会话归档/真删/批量导出 | `` | MIT |
+| [dfycaly98931680/dsh-trajectory-governance](https://github.com/dfycaly98931680/dsh-trajectory-governance) | Agent trajectory governance: multi-branch trajectory trees, loop-deadlock/invalid-retry/goal-drift detection and alerts. | `` | MIT |
+| [dragonbaba/dsh-routing-suite](https://github.com/dragonbaba/dsh-routing-suite) | Smart routing mode preset/plugin for DSH (read-only system-prompt guidance). | `` | MIT |
+| [EdgeTypE/dsh-better-deepseek](https://github.com/EdgeTypE/dsh-better-deepseek) | DSH 桥接插件：为 Better DeepSeek Chrome 扩展提供 HTTP 握手与 SSE 会话端点 | `` | MIT |
+| [errorcode7/dsh-prompt-manager](https://github.com/errorcode7/dsh-prompt-manager) | 提示词管理器 | `` | N/A |
+| [fff122/dsh-agent-arcade](https://github.com/fff122/dsh-agent-arcade) | 确定性贪吃蛇小游戏 DSH 插件，agent 逐步决策。 | `` | MIT |
+| [fff122/dsh-prompt-presets](https://github.com/fff122/dsh-prompt-presets) | 本地可复用提示词预设 DSH 插件，支持变量占位符。 | `` | MIT |
+| [Gumiho12345/dsh-plugin-net-access](https://github.com/Gumiho12345/dsh-plugin-net-access) | DSH 网络访问插件，提供联网/请求能力。 | `` | MIT |
+| [howmp/dsh-pentest](https://github.com/howmp/dsh-pentest) | DSH 渗透测试插件，提供安全测试能力。 | `` | MIT |
+| [huguangyu666/dsh-store](https://github.com/huguangyu666/dsh-store) | DSH 插件商店/分发插件。 | `` | MIT |
+| [hyls9527/dsh-plugins](https://github.com/hyls9527/dsh-plugins) | DSH 插件集合（已归档），含可加载 bundle。 | `` | MIT |
+| [imlishiyuan/deepseek-harness-zh-cn](https://github.com/imlishiyuan/deepseek-harness-zh-cn) | DSH 中文本地化/文档与配置资源包。 | `` | Apache-2.0 |
+| [jasper-zsh/dsh-plugin-provider-quota](https://github.com/jasper-zsh/dsh-plugin-provider-quota) | DSH provider 配额/预算监控插件。 | `` | MIT |
+| [jiesou/dsh-commandcode-go-provider](https://github.com/jiesou/dsh-commandcode-go-provider) | DSH 的 command/code provider 插件。 | `` | MIT |
+| [jleon-account/dsh-client-usage](https://github.com/jleon-account/dsh-client-usage) | DSH 客户端用量统计插件。 | `` | MIT |
+| [kinoward/dsh-plugin-subhub](https://github.com/kinoward/dsh-plugin-subhub) | DSH 第三方订阅账户接入插件（当前支持 OpenAI/ChatGPT 订阅的文本/图像对话）。 | `` | MIT |
+| [KunIsMe/dsh-filescope](https://github.com/KunIsMe/dsh-filescope) | DSH 文件作用域/可见性控制插件。 | `` | MIT |
+| [LeemanCheung/dsh-token-usage](https://github.com/LeemanCheung/dsh-token-usage) | DSH 本地优先 Token 用量持久化 / 预算 / 轨迹审计插件 | `` | MIT |
+| [Len7183/DSH-Think-zh](https://github.com/Len7183/DSH-Think-zh) | DSH 插件：强制思考用简体中文、回复跟随提问语言（注入 system prompt） | `` | MIT |
+| [liguobao/deepseek-harness-remote](https://github.com/liguobao/deepseek-harness-remote) | 基于 DSH 插件机制的多端远程访问方案（桌面 + 安卓客户端操作远程 Harness） | `` | MIT |
+| [loongsuite/dsh-plugin](https://github.com/loongsuite/dsh-plugin) | DSH OpenTelemetry 可观测性插件（GenAI trace/metrics 经 OTLP 导出到 Jaeger/Grafana 等） | `` | Apache-2.0 |
+| [lxzy-7/dsh-plugin-guard](https://github.com/lxzy-7/dsh-plugin-guard) | DSH 防护/校验插件，对运行期行为做守卫与限制。 | `` | MIT |
+| [MicroMilo/upstream-radar](https://github.com/MicroMilo/upstream-radar) | Continuous dependency monitor for DSH plugins surfacing precise vulnerability paths and breaking updates. | `` | Apache-2.0 |
+| [Mochabafey/whale-notify](https://github.com/Mochabafey/whale-notify) | 鲸鱼通知（飞书/QQ/微信/邮件双向触发 agent） | `` | MIT |
+| [Mr-remon219/dsh-search-boost](https://github.com/Mr-remon219/dsh-search-boost) | Search boost bundle for DSH (multi-engine fused search, X search, deep research). | `` | MIT |
+| [multica-ai/dsh-multica-runtime](https://github.com/multica-ai/dsh-multica-runtime) | Private out-of-tree DSH runtime bridge for the Multica agent platform. | `` | N/A |
+| [MutaLucem/dsh-plugin-integration](https://github.com/MutaLucem/dsh-plugin-integration) | DSH 插件集成/互通辅助插件。 | `` | MIT |
+| [nanshan1995/DSH-Plugin-Market](https://github.com/nanshan1995/DSH-Plugin-Market) | In-DSH plugin market with GitHub topic browse, cross-language search and a pre-install static security audit gate. | `` | MIT |
+| [Noob-stupid/dsh-github-login](https://github.com/Noob-stupid/dsh-github-login) | DSH GitHub 登录/OAuth 集成插件。 | `` | MIT |
+| [omdsh-dev/dsh-sidechain](https://github.com/omdsh-dev/dsh-sidechain) | DSH side-conversation plugin (/side persistent, /btw one-shot forks). | `` | N/A |
+| [Owen718/snapgrep](https://github.com/Owen718/snapgrep) | 进程内 Rust 三元组索引插件，让 Pi/DSH 代码搜索比 ripgrep 快最高 70× 且结果一致 | `` | MIT |
+| [sugarforever/dsh-lark](https://github.com/sugarforever/dsh-lark) | Lark/Feishu integration host plugin for DSH (WebSocket channel). | `` | N/A |
+| [taichuy/deepseek-harness-auth](https://github.com/taichuy/deepseek-harness-auth) | Out-of-tree authenticated web proxy bundle for DSH web profile. | `` | Apache-2.0 |
+| [timeance/dsh-approve-for-me](https://github.com/timeance/dsh-approve-for-me) | Rule-gated automatic sandbox approval for DSH (optional LLM review). | `` | MIT |
+| [TomoyoNatsume/dsh-qq-bridge](https://github.com/TomoyoNatsume/dsh-qq-bridge) | DSH QQ 消息桥接插件，将 QQ 频道消息接入智能体触发。 | `` | MIT |
+| [w2112515/dsh-plugin-marketplace](https://github.com/w2112515/dsh-plugin-marketplace) | 树外插件市场 | `` | N/A |
+| [wdsjwzl/session-seed-plugin](https://github.com/wdsjwzl/session-seed-plugin) | 会话自动注入种子 | `` | MIT |
+| [WNJXYK/dsh-codex-oauth](https://github.com/WNJXYK/dsh-codex-oauth) | 通过 OpenAI/ChatGPT OAuth 在 DSH 使用 GPT/生图/联网的插件（共享订阅额度） | `` | MIT |
+| [wz-heng/dsh-feishu-bridge](https://github.com/wz-heng/dsh-feishu-bridge) | DSH 飞书桥接插件，将飞书消息接入智能体触发。 | `` | MIT |
+| [xmanrui/dsh-feishu](https://github.com/xmanrui/dsh-feishu) | 飞书机器人接入 | `` | MIT |
+| [ymh0000123/dsh-client-masquerade](https://github.com/ymh0000123/dsh-client-masquerade) | 客户端身份伪装 | `` | MIT |
+| [yuko0331/DSH-telegram](https://github.com/yuko0331/DSH-telegram) | DSH Telegram 桥接插件，将 Telegram 消息接入智能体。 | `` | MIT |
+| [yun520-1/deepseek-heartflow](https://github.com/yun520-1/deepseek-heartflow) | DSH 心流/对话节奏类插件，调整交互体验。 | `` | MIT |
+| [zetaluolang-cyber/deepseek-harness-phone-remote](https://github.com/zetaluolang-cyber/deepseek-harness-phone-remote) | Remote filesystem/phone bridge for DSH over Tailscale/LAN (device pairing). | `` | MIT |
+| [zhouzhencheng07/dsh-tavily-search](https://github.com/zhouzhencheng07/dsh-tavily-search) | Free multi-source web search provider for DSH web seam (keyless Tavily etc.); repo renamed to dsh-free-search. | `` | MIT |
+| [zoahdev/dsh-github-intelligence](https://github.com/zoahdev/dsh-github-intelligence) | DSH 开发者情报插件：196+ 只读工具覆盖 GitHub/GitLab/npm/PyPI/ArXiv 等 16+ 生态。 | `` | MIT |
+
+← [返回 README](../../README.md)

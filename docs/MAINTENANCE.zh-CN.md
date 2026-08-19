@@ -50,7 +50,7 @@ python3 scripts/aggregate.py
 
 1. 运行 `python3 scripts/aggregate.py` 刷新候选池。
 2. 按 [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md) 的标准逐仓库核验（README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`），把判定写入 `data/audit-results.csv`。
-3. 将符合条件者提升进 `data/verified-plugins.csv`（填写 `capability` 与 `caution`），再依次运行 `python3 scripts/insert_verified_into_readme.py`（向两个 README 追加行）与 `python3 scripts/aggregate.py`（重建 `CATALOG.md` 与 `data/repositories.csv`）。
+3. 将符合条件者提升进 `data/verified-plugins.csv`（填写 `capability` 与 `caution`），再依次运行 `python3 scripts/generate_docs.py`（重新生成 README 索引——一个指向各分类页的紧凑导航索引——以及 `docs/categories/*.md` 分类页，每页保留该分类的完整列表）与 `python3 scripts/aggregate.py`（重建 `CATALOG.md` 与 `data/repositories.csv`）。
 
 判定依据是**有文档可循的装载路径**（安装命令或 `dsh`/Cordis 挂载声明），不是运行测试，也不代表安全审计。
 

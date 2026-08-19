@@ -12,8 +12,10 @@ full_name,html_url,description,category,stars,license,language,topics,pushed_at,
 - `full_name` — `owner/repo` (lowercase-stable, used as the dedup key).
 - `html_url` — `https://github.com/owner/repo`.
 - `description` — one-line summary.
-- `category` — skills | vision | automation | desktop | ui | memory | mcp | agent-os |
-  launcher | list | legal | other.
+- `category` — a fine-grained slug (e.g. `ui`, `model_gateway`, `agent_orchestration`); it
+  is mapped to the companion site's 22 capability categories via `SLUG_MAP` in
+  `scripts/generate_docs.py`. The 22 human-facing categories are the companion site's
+  taxonomy (ids match `https://deepseekharnessplugins.com/plugins/category/<id>`).
 - `stars` — integer string.
 - `license` — SPDX id if visible (e.g. `MIT`, `Apache-2.0`); note proprietary/EULA explicitly.
 - `language` — primary language.
@@ -43,7 +45,8 @@ repository,url,kind,category,install_or_usage,license,last_activity,verification
 - `repository` — `owner/repo`.
 - `url` — `https://github.com/owner/repo`.
 - `kind` — `dsh_skill` | `installable_dsh_plugin` | `cordis_bundle` | …
-- `category` — same enum as repositories.csv.
+- `category` — fine-grained slug, mapped to the site's 22 capability categories via
+  `SLUG_MAP` in `scripts/generate_docs.py` (same mapping as `repositories.csv`).
 - `install_or_usage` — the author's exact install / mount command or instructions.
 - `license` — SPDX id (note proprietary/EULA).
 - `last_activity` — ISO date of last push.

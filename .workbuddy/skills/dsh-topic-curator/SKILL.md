@@ -72,6 +72,17 @@ truth) and `references/csv-schema.md`:
   `references/csv-schema.md`. Never rewrite existing rows.
 - Verify row counts increased as expected and that the new `full_name`s are present.
 
+### 5b. Regenerate documentation
+
+- After promoting verified verdicts into `data/verified-plugins.csv`, run
+  `python3 scripts/generate_docs.py`. This regenerates the README index (a compact
+  navigation index that links out to the category pages) and the `docs/categories/*.md`
+  category pages (each holding the FULL listing of verified repos in that category). It
+  also refreshes the verified-count badge and the snapshot date. The README and
+  `docs/categories/` structure follows the companion site's 22 categories (ids match
+  `https://deepseekharnessplugins.com/plugins/category/<id>`); the CSV `category` slug is
+  mapped to those categories via `SLUG_MAP` in `scripts/generate_docs.py`.
+
 ### 6. Log
 
 - Append a brief note to `.workbuddy/memory/YYYY-MM-DD.md` (create if missing): pages

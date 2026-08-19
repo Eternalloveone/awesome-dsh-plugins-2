@@ -48,7 +48,7 @@ To review a large candidate pool at once (as done on 2026-08-14, when two full a
 
 1. Run `python3 scripts/aggregate.py` to refresh the candidate universe.
 2. Fan out per-repo checks (README + `package.json` + `cordis.patch.yml`/`dsh.plugin.json`) against the criteria in [`CONTRIBUTING.md`](CONTRIBUTING.md); record verdicts in `data/audit-results.csv`.
-3. Promote verified verdicts into `data/verified-plugins.csv` (fill `capability` and `caution`), then run `python3 scripts/insert_verified_into_readme.py` to append rows to both READMEs, and `python3 scripts/aggregate.py` to rebuild `CATALOG.md` and `data/repositories.csv`.
+3. Promote verified verdicts into `data/verified-plugins.csv` (fill `capability` and `caution`), then run `python3 scripts/generate_docs.py` to regenerate the README index (a compact navigation index that links out to the category pages) and the `docs/categories/*.md` category pages (each holding the full per-category listing), and `python3 scripts/aggregate.py` to rebuild `CATALOG.md` and `data/repositories.csv`.
 
 A verdict is a documented load path — an install command or a `dsh`/Cordis mount declaration — not a runtime test or a security audit.
 

@@ -16,10 +16,21 @@
   `verified_plugin/verified_skill/rejected/watchlist`. Unify by setting `verdict` == `review_status`
   to one of `verified_plugin | verified_skill | related | rejected | watchlist`.
   Only `verified_plugin`/`verified_skill` get promoted into `verified-plugins.csv`.
-- **Category enum (gotcha):** use the detailed enum in `scripts/insert_verified_into_readme.py`
-  (web_ui, vision, developer_tools, automation, memory_persona, search_browser, mcp, ecosystem,
-  skills, fun, tui, session_chat, data_tools, communication, remote_device, diagnostics,
-  uncategorized) — NOT the simplified enum in `references/csv-schema.md` (that file is outdated).
+- **Category enum (gotcha):** the CSV `category` column has drifted to ~66 slugs. The canonical doc
+  generator is now `scripts/generate_docs.py`, which reads `data/verified-plugins.csv` and maps each
+  `category` slug → one of the companion site's **22 categories** via `SLUG_MAP`. The 22 ids are the
+  site's route params: ui-experience, sessions-messages, utilities, desktop, mcp, plugin-tools, web-ui,
+  theme, security, chat-im, cli, voice, lists, billing, agents-workflows, integrations-sharing,
+  developer-tools, knowledge-research, media-vision, web-browser, ecosystem-resources, fun. Unmapped
+  slugs fall back to `utilities`. (The obsolete `insert_verified_into_readme.py` and
+  `regen_readme_sections.py` are deleted — do not use them.)
+- **README is now an index:** README.md / README.en.md are thin indexes (nav + top-10 per category,
+  <600 lines) that point into `docs/categories/`. The full listing lives in `docs/categories/` — 44
+  pages (22 category ids × CN/EN: `<id>.md` / `<id>.en.md`). Each page's top link points to the
+  matching site category: `https://deepseekharnessplugins.com/plugins/category/<id>`.
+- **Regenerate docs:** `python3 scripts/generate_docs.py` (rewrites the README index + all 44 category
+  pages, updates nav/badge/snapshot/idempotent w.r.t. CSV). Re-run after any `verified-plugins.csv`
+  change.
 - **CSV append formats:**
   - `repositories.csv` columns: full_name,html_url,description,category,stars,license,language,
     topics,pushed_at,homepage,verified,sources. `topics` = pipe-separated (`a|b|c`),
@@ -28,6 +39,9 @@
   - `dsh-plugin-topic-candidates.csv` columns: repository,topic,review_status.
     `topic` = `dsh-plugin`; add ALL new repos with their `review_status`.
 - **Merge order:** backup `data/*.csv` → `merge_audit_verdicts.py <verdicts...>` (audit + verified)
-  → append script (repositories + candidates) → `insert_verified_into_readme.py` (CN + EN).
-  `insert_verified_into_readme.py` is idempotent and backfills older verified rows too.
+  → append script (repositories + candidates) → `generate_docs.py` (README index + 44 category pages).
+- **Website source mismatch (gotcha):** deepseekharnessplugins.com reads its README from
+  `cccakeee/awesome-dsh-plugins` (hardcoded `OUR_SOURCE` in the site's `scripts/sync-plugins.ts`),
+  NOT this repo; it maps README headings → 22 cats via `SECTION_MAP`. To have the live site ingest
+  THIS repo, repoint `OUR_SOURCE` and align `SECTION_MAP`.
 - **Commit locally, push pending user confirmation.**
