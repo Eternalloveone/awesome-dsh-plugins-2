@@ -27,7 +27,10 @@
 - **README is now an index:** README.md / README.en.md are thin indexes (nav + top-10 per category,
   <600 lines) that point into `docs/categories/`. The full listing lives in `docs/categories/` — 44
   pages (22 category ids × CN/EN: `<id>.md` / `<id>.en.md`). Each page's top link points to the
-  matching site category: `https://deepseekharnessplugins.com/plugins/category/<id>`.
+  matching site category: `https://deepseekharnessplugins.com/plugins/category/<id>`. Page titles are
+  **h2 with the plain category name** (CN `## 界面与体验`, EN `## UI & Experience`) — chosen to equal
+  the site's `SECTION_MAP` keys so the site parser can consume the pages unchanged; the EN/CN name
+  pair lives in the site-link line below the title.
 - **Regenerate docs:** `python3 scripts/generate_docs.py` (rewrites the README index + all 44 category
   pages, updates nav/badge/snapshot/idempotent w.r.t. CSV). Re-run after any `verified-plugins.csv`
   change.
@@ -40,8 +43,13 @@
     `topic` = `dsh-plugin`; add ALL new repos with their `review_status`.
 - **Merge order:** backup `data/*.csv` → `merge_audit_verdicts.py <verdicts...>` (audit + verified)
   → append script (repositories + candidates) → `generate_docs.py` (README index + 44 category pages).
-- **Website source mismatch (gotcha):** deepseekharnessplugins.com reads its README from
-  `cccakeee/awesome-dsh-plugins` (hardcoded `OUR_SOURCE` in the site's `scripts/sync-plugins.ts`),
-  NOT this repo; it maps README headings → 22 cats via `SECTION_MAP`. To have the live site ingest
-  THIS repo, repoint `OUR_SOURCE` and align `SECTION_MAP`.
+- **Website ingestion (gotcha, corrected 2026-08-19):** deepseekharnessplugins.com's
+  `OUR_SOURCE` IS **our own repo's README** (`raw.githubusercontent.com/cccakeee/awesome-dsh-plugins/main/README.md`) — there is no separate upstream. However the site's `SECTION_MAP`
+  (`src/modules/plugins/merge.ts`) only maps **9 of our 22** category headings; MCP 与协议, 桌面与应用,
+  安全与鉴权, Agent/自动化与工作流, 其他, 插件工具, Web 界面与前端, 主题与皮肤, 聊天与 IM, 命令行与终端,
+  语音, 清单与资源, 用量与计费 are unmapped. Since README became an index (top-10 only), the site's next
+  sync will either ABORT (shrink guard: entries still listed in other sources) or DROP entries.
+  **Do NOT run the site's `scripts/sync-plugins.ts` until adapted.** Deferred adaptation plan: point the
+  site at the 22 `docs/categories/<id>.md` pages (h2 titles already match CN SECTION_MAP keys; add the
+  22 EN titles like `ui & experience` site-side) and include them in the shrink-guard haystack.
 - **Commit locally, push pending user confirmation.**
