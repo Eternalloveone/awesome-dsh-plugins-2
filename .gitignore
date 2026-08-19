@@ -20,3 +20,7 @@ data/topic-snapshot/
 
 # Local source material — never committed
 ref/
+
+# WorkBuddy local memory — keep the skill + curated notes, ignore daily logs
+.workbuddy/memory/*.md
+!.workbuddy/memory/MEMORY.md
