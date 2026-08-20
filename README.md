@@ -2,7 +2,7 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 ![Catalog](https://img.shields.io/badge/catalog-2296-2563eb)
-![Verified](https://img.shields.io/badge/verified-1550-16a34a)
+![Verified](https://img.shields.io/badge/verified-1572-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
 [English](README.en.md) | **简体中文** | [🌐 网站](https://deepseekharnessplugins.com)
@@ -11,7 +11,7 @@
 
 DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“Everything is a plugin”架构：Profile 组合 Bundle，外部插件通常以 `package.json` 的 `dsh` 字段及 patch 文件声明挂载方式。[1] [2] 因此，本目录中的安装方法和兼容性应在你自己的 DSH 版本上先行验证。
 
-**快照日期：2026-08-19。** 本版主目录收录 **1550 个**经源码或安装清单核验的插件与 Skill，按 22 个能力分类组织（与配套网站 [deepseekharnessplugins.com](https://deepseekharnessplugins.com) 同构）；完整清单已拆分到 [`docs/categories/`](docs/categories/) 的 22 个分类页面。同时提供 **全量聚合目录 [`CATALOG.md`](CATALOG.md)（2296 个仓库）**，合并 GitHub 搜索与多个社区目录去重后得到。**聚合 ≠ 可装载、可兼容、可安全运行**；只有本目录核验子集进入主目录，证据见 [data/verified-plugins.csv](data/verified-plugins.csv) 与 [data/audit-results.csv](data/audit-results.csv)。[3]
+**快照日期：2026-08-21。** 本版主目录收录 **1572 个**经源码或安装清单核验的插件与 Skill，按 22 个能力分类组织（与配套网站 [deepseekharnessplugins.com](https://deepseekharnessplugins.com) 同构）；完整清单已拆分到 [`docs/categories/`](docs/categories/) 的 22 个分类页面。同时提供 **全量聚合目录 [`CATALOG.md`](CATALOG.md)（2296 个仓库）**，合并 GitHub 搜索与多个社区目录去重后得到。**聚合 ≠ 可装载、可兼容、可安全运行**；只有本目录核验子集进入主目录，证据见 [data/verified-plugins.csv](data/verified-plugins.csv) 与 [data/audit-results.csv](data/audit-results.csv)。[3]
 
 | 导航 | 内容 |
 | --- | --- |
@@ -66,7 +66,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [lanshuye123/DSH-Terminal](https://github.com/lanshuye123/DSH-Terminal) | VSCode 风格终端模拟器+文件管理器：宿主机真实 PTY（subprocess.spawnTerminal/node-pty）、多会话、自研 ANSI 渲染、工作区目录树+预览 | `动态部署：git clone 后 node scripts/build-payload.js 产出 dist/ 载荷，按 BOOTSTRAP.md 让 DSH Agent 用 cordis_define 提交 + cordis_run 激活（更新用 kind:existing）` | MIT；无 CLI 导入通道、依赖 DSH dynamic-plugin 会话与 node-pty 私有细节，DSH 升级需回归。 |
 | [liuup/dsh-latex-tools](https://github.com/liuup/dsh-latex-tools) | 在 DeepSeek Harness 中悬停任意 LaTeX 公式即可复制 TeX 源码或导出独立 SVG 文件；MathJax 由插件自身 host half 提供，首次按需加载后浏览器缓存，完全离线。 | `npx @deepseek-ai/dsh plugin --profile web add dsh-latex-tools （或 github:liuup/dsh-latex-tools）；验证 npx @deepseek-ai/dsh --profile web --dump-config 出现 '# == dsh-latex-tools' 层` | MIT |
 
-> 该分类共 **182** 个已核验条目，[查看完整清单 →](docs/categories/ui-experience.md)
+> 该分类共 **184** 个已核验条目，[查看完整清单 →](docs/categories/ui-experience.md)
 
 ### 会话与消息
 
@@ -83,7 +83,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [xiaobright/dsh-anchored-standard](https://github.com/xiaobright/dsh-anchored-standard) | DSH 智能体预设集：用 Minimal 工具面/零上下文锚定会话轨迹，再晋升 Standard 工具目录；context-gate/tool-bootstrap 等 agent.cordis.yml 插件行 | `cp -R preset "$dsh_home/.agent-presets/anchored-standard" (DSH_HOME 默认 ~/.dsh); 重启 DSH 后在空会话选择 Anchored Standard 预设` | MIT；预设持 bash 与 dshx 网关代执行 web_search/subagent 等真实工具，安装前需审阅文件 |
 | [FuRongJun-1999/dsh-memory](https://github.com/FuRongJun-1999/dsh-memory) | Cross-session long-term memory infrastructure for DSH agents: memory write/retrieve, continuous learning, auditable trust ('智能论 v3.2'). | `dsh plugin --profile web add @furongjun1999/dsh-memory` | MIT；跨会话记忆会持久化本地数据，涉及隐私，建议定期清理与审计。 |
 
-> 该分类共 **90** 个已核验条目，[查看完整清单 →](docs/categories/sessions-messages.md)
+> 该分类共 **94** 个已核验条目，[查看完整清单 →](docs/categories/sessions-messages.md)
 
 ### 其他
 
@@ -100,7 +100,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [610la/dsh-notification-center](https://github.com/610la/dsh-notification-center) | DSH 通知中心插件（浏览器系统通知 + 21 种匹配音效） | `` | MIT |
 | [940842546/dsh-usage-billing](https://github.com/940842546/dsh-usage-billing) | 用量与消费统计 | `` | MIT |
 
-> 该分类共 **63** 个已核验条目，[查看完整清单 →](docs/categories/utilities.md)
+> 该分类共 **65** 个已核验条目，[查看完整清单 →](docs/categories/utilities.md)
 
 ### 桌面与应用
 
@@ -117,7 +117,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [flymysql/dsh-remote](https://github.com/flymysql/dsh-remote) | 远程访问助手：/remote 命令与设置页打印针对 loopback-only harness 的 SSH 隧道/反隧道/反代命令并读取 /dsh-remote/info；remote-access assistant printing exact SSH tunnel commands | `npm install dsh-remote  + add '- id: dsh-remote / name: dsh-remote' row to profile cordis.patch.yml` | MIT；Verify the patch row id/name match the installed package before adding |
 | [hchao3335-maker/dsh-lan-gate](https://github.com/hchao3335-maker/dsh-lan-gate) | 单文件 DSH 内网访问网关（lan-gate.mjs）：进程内反向代理 0.0.0.0:3088→127.0.0.1:3080，局域网设备首次访问需本机在设置面板批准，设备令牌+Cookie 绑定、限流、手机排版适配 | 把 lan-gate.mjs 复制到 $DSH_HOME/lan-gate/，在 profiles/web/cordis.patch.yml 追加 {- insert: [{id: lan-gate, name: 'file:///<绝对路径>/lan-gate.mjs'}]}，重启 dsh web；见 README 三步安装 | MIT；把 DSH Web 暴露给局域网并自管设备令牌/Cookie 鉴权，明文内网转发；README 明确警告勿直接暴露公网，须前置 HTTPS+登录认证 |
 
-> 该分类共 **40** 个已核验条目，[查看完整清单 →](docs/categories/desktop.md)
+> 该分类共 **44** 个已核验条目，[查看完整清单 →](docs/categories/desktop.md)
 
 ### MCP 与协议
 
@@ -151,7 +151,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [95384/DSH-user-plugin-list](https://github.com/95384/DSH-user-plugin-list) | Adds a '用户插件' tab in Settings→插件 listing non-system plugins from the loader tree (profile-local, external-path, enabled/disabled) with search/status/collapse interaction; classifies via Node resolve + realpath and excludes transitive deps. | `dsh plugin --profile web add github:95384/DSH-user-plugin-list (or local: git clone && dsh plugin --profile web add .; update: dsh plugin --profile web update user-plugin-list; remove: dsh plugin --profile web remove user-plugin-list)` | MIT |
 | [akira399/dsh-plugin-publisher](https://github.com/akira399/dsh-plugin-publisher) | DSH plugin development & GitHub publishing workflow: registers dsh-plugin-publishing skill (default on, opt-out) covering env checks, plugin contract cheatsheet, dev steps, verify, and publish-to-GitHub flow; optional GitHub PAT via settings; every publish operation requires explicit human consent. | `npx -p @deepseek-ai/dsh dsh plugin --profile web add github:akira399/dsh-plugin-publisher (restart dsh web; manage in Settings→插件配置→dsh-plugin-publisher)` | MIT；Skill is default-enabled (opt-out); disable via the settings card if unwanted. |
 
-> 该分类共 **62** 个已核验条目，[查看完整清单 →](docs/categories/plugin-tools.md)
+> 该分类共 **63** 个已核验条目，[查看完整清单 →](docs/categories/plugin-tools.md)
 
 ### Web 界面与前端
 
@@ -168,7 +168,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [MeteorNOX/DeepSeek-Balance-Whale-Widget](https://github.com/MeteorNOX/DeepSeek-Balance-Whale-Widget) | Floating cartoon whale widget living in the DSH Web UI corner that auto-loads, refreshes DeepSeek balance every 60s (click to refresh), with drag/snap, left-flip mirror, squish animation, size scaling and rolling-number animation | `` | 未发现；Calls external DeepSeek API using credential service key; README warns not to upload .credentials.yaml/settings.yaml/sessions. Load path relies on manually merging cordis.patch.yml and verifying via curl on 127.0.0.1:3080 |
 | [op7418/pilot-harness](https://github.com/op7418/pilot-harness) | Installable DSH bundles that add a CodePilot-style theme, workspace Files right sidebar (@path insertion, branch summary), Session hover reminder summary, and per-Session ZIP export (/export) to a DSH Web profile. | `dsh plugin --profile web add https://github.com/op7418/pilot-harness/releases/latest/download/deepseek-ai-dsh-ui-worktree-0.1.0-rc.5.tgz (per-bundle; desktop app also shipped as macOS/Windows/Linux installers from Releases)` | MIT；Repo is also an Electron DESKTOP SHELL shipped as unsigned macOS DMG and unsigned Windows/Linux installers — only install from the official GitHub Release. Files/Reminder-summary bundles require Pilot Harness v0.1.0 UI slot contracts to render. |
 
-> 该分类共 **191** 个已核验条目，[查看完整清单 →](docs/categories/web-ui.md)
+> 该分类共 **192** 个已核验条目，[查看完整清单 →](docs/categories/web-ui.md)
 
 ### 主题与皮肤
 
@@ -189,7 +189,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [jkrandom-sudo/dsh-plugin-audit](https://github.com/jkrandom-sudo/dsh-plugin-audit) | 插件安全审计：plugin_audit 静态扫描（文件/行号权限画像）+ 运行时哨兵在触及凭证或向未知主机外发时请求批准；可选 invariant 组件 | `dsh plugin --profile web add dsh-plugin-audit （或 github:jkrandom-sudo/dsh-plugin-audit）` | MIT；invariant 行不能装配进没有 invariants 服务的 profile（boot 报 pending） |
 | [karuboniru/dsh-approval-guardian](https://github.com/karuboniru/dsh-approval-guardian) | 自动审批机制（仿 codex auto-review）：按部署策略自动批准/拒绝 agent 审批请求，减少人工等待；默认 shipped patch 为保守默认 | `dsh plugin --profile web add dsh-approval-guardian@0.1.1 （或本地 checkout：pnpm install && pnpm run build && dsh plugin --profile web add .）` | MIT；上线前务必审阅部署策略行；enable/disable 走 profile 层 cordis.patch.yml 覆盖 |
 
-> 该分类共 **20** 个已核验条目，[查看完整清单 →](docs/categories/security.md)
+> 该分类共 **21** 个已核验条目，[查看完整清单 →](docs/categories/security.md)
 
 ### 聊天与 IM
 
@@ -206,7 +206,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [amlyczz/dsh-lark-link](https://github.com/amlyczz/dsh-lark-link) | 飞书/Lark 双向桥：扫码 30 秒建应用，多模式 Agent 每会话独立，卡片化命令，零丢失 Outbox + Inbound WAL 补发，图片/文件多媒体进出，/doctor 诊断包；默认 Full access 沙箱 + 审批 never | `dsh plugin --profile web add dsh-lark-link --ignore-scripts; dsh web; 会话内 /lark setup 扫码后 /lark start` | MIT；飞书消息可驱动本机 agent；默认 Full access + 审批 never，持 App Secret 凭据且诊断包含会话日志出站，务必收紧权限 |
 | [agent-plaza/agent-plaza](https://github.com/agent-plaza/agent-plaza) | Zero-signup public commons for AI agents: exposes plaza_list_posts / plaza_create_post / identity / flowers HTTP tools to the dsh model; also ships skills/agent-plaza SKILL.md for Codex/Cursor/Claude Code/Hermes. | npx -y @deepseek-ai/dsh plugin --profile web add github:agent-plaza/agent-plaza (or `add .` in checkout); skill: npx skills add agent-plaza/agent-plaza --skill agent-plaza -g -y | MIT；Primary project is a Cloudflare Workers service (D1 DB); the DSH part is the tool bundle. |
 
-> 该分类共 **64** 个已核验条目，[查看完整清单 →](docs/categories/chat-im.md)
+> 该分类共 **65** 个已核验条目，[查看完整清单 →](docs/categories/chat-im.md)
 
 ### 命令行与终端
 
@@ -304,7 +304,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [shengsheng90/DSH-taskboard](https://github.com/shengsheng90/DSH-taskboard) | Native taskboard: SQLite projects/tasks/workflows/automation, dsh Taskboard sidebar UI, in-process taskboard_* agent tools, manage-taskboard skill, headless JSON CLI. | `dsh plugin --profile web add -w <path>/shengsheng-dsh-taskboard-<ver>.tgz (build+pack first; lib/ is gitignored)` | Apache-2.0 |
 | [Vladimir-Human/ru-marketplace-mcp](https://github.com/Vladimir-Human/ru-marketplace-mcp) | 9 个俄罗斯电商 + 淘宝的只读 MCP 服务器（价格/库存/评分/评论/比价），DSH 包自带 13 个 Agent Skills，MCP 行默认关闭以省 token，价格对比约 0.9k tokens | `dsh plugin --profile web add github:Vladimir-Human/ru-marketplace-mcp#path:/dsh; 再 git clone + uv sync --frozen + 设 RU_MARKETPLACE_MCP_DIR` | MIT；MCP 行默认关闭，需手动设 RU_MARKETPLACE_MCP_DIR 指向本地克隆并重启 profile 才启用 |
 
-> 该分类共 **101** 个已核验条目，[查看完整清单 →](docs/categories/knowledge-research.md)
+> 该分类共 **103** 个已核验条目，[查看完整清单 →](docs/categories/knowledge-research.md)
 
 ### 设计、媒体与视觉
 
@@ -338,7 +338,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [ch1bug/dsh-mimo-agent-tools](https://github.com/ch1bug/dsh-mimo-agent-tools) | 把小米 MiMo API 封装为 DSH Cordis 模型工具：mimo_search / vision / audio / video / asr / tts（Python 驱动，MIMO_DRIVER 指向默认安装路径），与 @deepseek-ai/dsh-tools 共存不重复加载。 | `dsh plugin --profile web add /path/to/dsh-mimo-agent-tools（或 github:ch1bug/dsh-mimo-agent-tools）；安装 python 驱动后重启 dsh web，工具自动挂载` | MIT；依赖 MiMo API 可用性与密钥配置。 |
 | [Clizo1209/dsh-playwright-browser](https://github.com/Clizo1209/dsh-playwright-browser) | Semantic, multi-tab browser automation for DeepSeek Harness powered by Playwright: abort-aware page operations, Cordis-owned lifecycle cleanup, configurable screenshotDir (default .dsh-browser/screenshots); ships sanitized real-world test suite on public demo sites. | dsh plugin --profile web add dsh-playwright-browser  (or tarball: dsh plugin --profile web add ./dsh-playwright-browser-0.1.3.tgz; headless: dsh plugin --profile headless add ./dsh-playwright-browser-0.1.3.tgz); needs `npx playwright install chromium` | MIT；Requires Playwright Chromium install; pnpm 10+ may need allowBuilds in profile pnpm-workspace.yaml for git installs. |
 
-> 该分类共 **52** 个已核验条目，[查看完整清单 →](docs/categories/web-browser.md)
+> 该分类共 **53** 个已核验条目，[查看完整清单 →](docs/categories/web-browser.md)
 
 ### 生态与资源
 
@@ -355,7 +355,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [Vladimir-Human/humanizer-ru](https://github.com/Vladimir-Human/humanizer-ru) | Russian AI-writing humanizer skill: 38 patterns, 39 regex markers, blind paired evals, C2PA/EXIF/XMP metadata cleaning; ships DSH skill bundle in dsh/ | `dsh plugin --profile web add "github:Vladimir-Human/humanizer-ru#path:/dsh"` | MIT |
 | [zimodzh/dsh-plugin-dev-skills](https://github.com/zimodzh/dsh-plugin-dev-skills) | Agent Skills pack for developing DSH plugins: SKILL.md (8 rules + 6 workflows), 12 references (bundle/cordis/patch/tools/LLM), hello-plugin/greet-tool examples, evals; works in DSH/Claude Code/Codex. | `git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.dsh/skills/dsh-plugin-dev (or other agent skills dir)` | MIT |
 
-> 该分类共 **104** 个已核验条目，[查看完整清单 →](docs/categories/ecosystem-resources.md)
+> 该分类共 **105** 个已核验条目，[查看完整清单 →](docs/categories/ecosystem-resources.md)
 
 ### 纯属好玩
 
@@ -372,7 +372,7 @@ DeepSeek Harness 目前处于 **Developer Preview**。官方采用 Cordis 的“
 | [lvyuchuiyi/dsh-funpack](https://github.com/lvyuchuiyi/dsh-funpack) | 趣味插件包:夸夸(/praise)、运势(/fortune)、摸鱼战报(/report)、番茄钟(/pomodoro)、休息提醒(/break),右下角鲸鱼娘桌宠(自定义形象/台词/互动键,支持 HatchPet/Codex 宠物包),/persona 切换说话人设;单文件零依赖零构建。 | `dsh plugin --profile web add github:lvyuchuiyi/dsh-funpack (或 dsh plugin --profile web add ./dsh-funpack)` | MIT；桌宠素材来自 dsh-pet(BSD-3) 与 Taffy 宠物包,随插件打包供个人/爱好者使用。 |
 | [mchenziyi/galgame-dsh-plugin](https://github.com/mchenziyi/galgame-dsh-plugin) | Customizable text-based galgame/otome world engine skill for DSH: world/template creation, roleplay state machine invoked by the agent; also usable as a plain project skill (skills/galgame-world/). | `dsh plugin --profile demo add github:mchenziyi/galgame-dsh-plugin` | MIT |
 
-> 该分类共 **34** 个已核验条目，[查看完整清单 →](docs/categories/fun.md)
+> 该分类共 **36** 个已核验条目，[查看完整清单 →](docs/categories/fun.md)
 ## 官方内置能力（不是社区插件）
 
 官方仓库中已有大量随运行时分发的包；它们属于 DSH 的可组合系统组件，不宜与独立社区扩展混为一谈。官方架构文档列出了模型、工具、Session、Agent Loop 等可替换缝隙。[2] 下表列出用户最常接触的官方能力入口。

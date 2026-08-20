@@ -81,6 +81,7 @@
 | [creght-dev/skills](https://github.com/creght-dev/skills) | Creght 平台 Agent Skills 仓库，附带 DSH bundle 发布（ctx.skills provider 扫描 SKILL.md） | `` | MIT |
 | [DEEP-IOS/dsh-humanizer](https://github.com/DEEP-IOS/dsh-humanizer) | DSH 中文文本去 AI 痕迹工作流插件：humanize_study/guard/reference 工具，动笔前注入作者化理论。 | `` | MIT |
 | [dhicoc/dsh-chinese-traditional-wisdom-skill](https://github.com/dhicoc/dsh-chinese-traditional-wisdom-skill) | Packages the 'Chinese Traditional Wisdom' (玄枢) skill — local deterministic engines for BaZi/Ziwei/divination etc. | `` | MIT |
+| [dshplugin/dsh-plugin-hub](https://github.com/dshplugin/dsh-plugin-hub) | DSH 社区插件市场：嵌入 Harness 设置→插件中心，浏览/搜索/一键安装 4000+ 人工精选社区插件，每日更新。 | `cordis.patch.yml 挂载（dsh-plugin 段插入 profile layer stack）` | MIT |
 | [Jesse-njx/dsh-skillport](https://github.com/Jesse-njx/dsh-skillport) | Import Claude Code/Codex/Cursor/Gemini skills, Cursor rules, and Claude commands into DSH's skill registry, with a skills doctor | `dsh plugin --profile web add @dsh-skillport/bundle` | MIT; Reads local skill/rule files (.claude, .cursor, .gemini); imported skill scripts run through DSH's normal sandboxed shell tool; no network or credentials |
 | [labring/sealos-skills](https://github.com/labring/sealos-skills) | AI agent skills for Sealos (deploy projects, provision DB/storage); DSH-compatible skill pack. | `` | N/A |
 | [liqichen/dsh-plugin-manager](https://github.com/liqichen/dsh-plugin-manager) | DSH 插件管理器，负责技能/插件的安装与维护。 | `` | MIT |

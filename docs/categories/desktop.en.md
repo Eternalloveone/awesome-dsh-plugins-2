@@ -27,6 +27,7 @@
 | [zimzaza4/dsh-bash-win](https://github.com/zimzaza4/dsh-bash-win) | Windows 上为 DSH 提供 Git Bash 与 WSL2 bash 工具：ctx.subprocess 直接 spawn bash.exe/wsl.exe（绕开受限令牌层），含 bwrap 沙箱、审批模式与后台任务，自动探测安装位置/环境变量/config 优先级 | `dsh plugin --profile web add @zimzaza4/dsh-bash-win（装完重启 dsh web；卸载 dsh plugin --profile web remove @zimzaza4/dsh-bash-win）` | MIT; 改代码后必须重启 DSH（HMR 不可靠）；WSL2 发行版需预装 bubblewrap |
 | [Very12345/sai-dsh-plugins](https://github.com/Very12345/sai-dsh-plugins) | sai Android shell 的首方 DSH 插件集（UI / Android / 桥等独立版本 bundle，预构建 JS 免生命周期脚本）；Android 作为 OS 权限/密钥/麦克风/前台服务权威，provider 与 GitHub 凭据永不暴露给插件。 | `dsh plugin --profile sai add <独立 bundle>（各 bundle 独立版本；scheduled Action 每 6h 发布 Ed25519 签名目录，缺失签名密钥时 fail closed，Release tag 逐 bundle 打包）` | GPL-3.0-only; 插件绑定 sai Android shell 生态；各 bundle 具体工具清单未在 digest 展开。 |
 | [6Mikao9/dsh-wsl-workspace](https://github.com/6Mikao9/dsh-wsl-workspace) | DSH WSL 工作区集成/启动器插件。 | `` | MIT |
+| [988hj7tczd-oss/dsh-computer-use](https://github.com/988hj7tczd-oss/dsh-computer-use) | Computer Use 插件：screen_observe + compute，虚拟鼠标真人操作（需 cua-driver 与系统辅助权限）。 | cordis.patch.yml 挂载 + install.sh（见 README） | MIT |
 | [chiro2001/dsh-oc](https://github.com/chiro2001/dsh-oc) | DSH 的 OpenCode TUI 前端桥接插件（后端 dsh，前端官方 opencode）。 | `` | N/A |
 | [cyanfish-x/dsh-live2d-pets](https://github.com/cyanfish-x/dsh-live2d-pets) | DSH Live2D 桌面宠物挂件插件。 | `` | MIT |
 | [dawsondx/dsh-web-open](https://github.com/dawsondx/dsh-web-open) | Prints the full GUI URL and opens the default browser once `dsh web` finishes starting. | `` | MIT |
@@ -40,9 +41,12 @@
 | [sereinmono/dsh-desktop-pet](https://github.com/sereinmono/dsh-desktop-pet) | DSH 桌面宠物插件，提供桌面挂件式陪伴 UI。 | `` | MIT |
 | [sjh9714/dsh-win32](https://github.com/sjh9714/dsh-win32) | 面向 Windows 平台的 DSH 桌面/系统级集成插件。 | `` | MIT |
 | [smanx/dsh-proxy](https://github.com/smanx/dsh-proxy) | HTTP+WebSocket reverse proxy exposing the local DSH service to the LAN with Basic Auth. | `` | MIT |
+| [TiantianFlow/dsh-tailscale-gateway](https://github.com/TiantianFlow/dsh-tailscale-gateway) | Tailscale 私有网络访问网关：精确用户白名单 + loopback-only 网关 + 冲突安全的私有 Serve 配置。 | cordis.patch.yml 挂载（inert bundle，见 README） | MIT |
+| [xgone/dsh-remote](https://github.com/xgone/dsh-remote) | DSH 远程访问：账号/密码认证 + MFA (TOTP)，把 loopback-only 的 Harness 暴露给受控客户端。 | cordis.patch.yml 挂载（见 README） | MIT |
 | [yeruizhi/dsh-lark-meeting-notifier](https://github.com/yeruizhi/dsh-lark-meeting-notifier) | DSH 飞书(Lark)会议提醒/通知插件。 | `` | MIT |
 | [yjsoooooo/dsh-chrome](https://github.com/yjsoooooo/dsh-chrome) | DSH Chrome 浏览器控制插件 | `` | MIT |
 | [yuzi-ska/dsh-chrome-devtools](https://github.com/yuzi-ska/dsh-chrome-devtools) | DSH Chrome DevTools MCP 集成插件 | `` | N/A |
 | [ZichengGurrr/dsh-window](https://github.com/ZichengGurrr/dsh-window) | DSH Windows 桌面壳（WebView2/Edge 内核）插件，将 Web UI 封装为原生窗口。 | `` | MIT |
+| [ZSeven-W/dsh-ios](https://github.com/ZSeven-W/dsh-ios) | iOS 模拟器插件：实时 iOS Simulator 视图 + USB 连接真机，供 DSH 在移动端模拟环境交互。 | cordis.patch.yml 挂载（见 README） | MIT |
 
 ← [Back to README](../../README.md)

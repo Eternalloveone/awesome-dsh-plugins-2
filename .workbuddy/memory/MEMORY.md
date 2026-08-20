@@ -43,13 +43,14 @@
     `topic` = `dsh-plugin`; add ALL new repos with their `review_status`.
 - **Merge order:** backup `data/*.csv` → `merge_audit_verdicts.py <verdicts...>` (audit + verified)
   → append script (repositories + candidates) → `generate_docs.py` (README index + 44 category pages).
-- **Website ingestion (gotcha, corrected 2026-08-19):** deepseekharnessplugins.com's
-  `OUR_SOURCE` IS **our own repo's README** (`raw.githubusercontent.com/cccakeee/awesome-dsh-plugins/main/README.md`) — there is no separate upstream. However the site's `SECTION_MAP`
-  (`src/modules/plugins/merge.ts`) only maps **9 of our 22** category headings; MCP 与协议, 桌面与应用,
-  安全与鉴权, Agent/自动化与工作流, 其他, 插件工具, Web 界面与前端, 主题与皮肤, 聊天与 IM, 命令行与终端,
-  语音, 清单与资源, 用量与计费 are unmapped. Since README became an index (top-10 only), the site's next
-  sync will either ABORT (shrink guard: entries still listed in other sources) or DROP entries.
-  **Do NOT run the site's `scripts/sync-plugins.ts` until adapted.** Deferred adaptation plan: point the
-  site at the 22 `docs/categories/<id>.md` pages (h2 titles already match CN SECTION_MAP keys; add the
-  22 EN titles like `ui & experience` site-side) and include them in the shrink-guard haystack.
+- **Website ingestion (adapted 2026-08-19):** deepseekharnessplugins.com's `OUR_SOURCE` IS our own
+  repo. Since README became an index, the site's `sync-plugins.ts` now fetches the **22
+  `docs/categories/<id>.md` pages** (CN, raw.githubusercontent.com/cccakeee/awesome-dsh-plugins/main/docs/categories/<id>.md),
+  concatenates them, and feeds the same `parseAwesomeReadme`. `SECTION_MAP` (site's
+  `src/modules/plugins/merge.ts`) covers all 22 CN + EN titles. Verified: all 1550 curated repos
+  land in `plugins.snapshot.json` (8169 plugins total), shrink guard passes.
+- **GOTCHA (parser case):** the site parser lowercases every heading (`toLowerCase()`), and JS
+  object keys are case-sensitive → any ASCII inside a SECTION_MAP key must be lowercase
+  (`web 界面与前端`, `mcp 与协议`, `聊天与 im`, `agent、自动化与工作流` — NOT `Web`/`MCP`/`IM`/`Agent`).
+  Mixed-case keys silently drop whole pages (lost 473 entries on first sync attempt).
 - **Commit locally, push pending user confirmation.**

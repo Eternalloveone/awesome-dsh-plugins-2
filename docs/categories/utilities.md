@@ -15,6 +15,7 @@
 | [610la/dsh-notification-center](https://github.com/610la/dsh-notification-center) | DSH 通知中心插件（浏览器系统通知 + 21 种匹配音效） | `` | MIT |
 | [940842546/dsh-usage-billing](https://github.com/940842546/dsh-usage-billing) | 用量与消费统计 | `` | MIT |
 | [acidmoon/dizzy-dsh](https://github.com/acidmoon/dizzy-dsh) | DSH 扩展包（dizzy），具体能力需查看源码确认。 | `` | N/A |
+| [akira399/dsh-novel-writer](https://github.com/akira399/dsh-novel-writer) | 网络小说创作插件：九阶段门禁式创作流程 + 世界书设定注入 + 本地书籍导入 + AI 一键润色 + 去 AI 味。 | cordis.patch.yml 挂载（见 README） | MIT |
 | [asdf17128/dsh-doctor](https://github.com/asdf17128/dsh-doctor) | DSH 自检/诊断插件，检查配置与环境健康。 | `` | N/A |
 | [ben7am1n/dsh-claude-marketplace](https://github.com/ben7am1n/dsh-claude-marketplace) | DSH 插件市场，可在 DSH 内浏览/安装 Claude 技能类扩展。 | `` | N/A |
 | [benzhoupo/dsh-effort-config](https://github.com/benzhoupo/dsh-effort-config) | DSH 推理强度（effort）配置插件，调节模型推理投入。 | `` | N/A |
@@ -50,6 +51,7 @@
 | [MutaLucem/dsh-plugin-integration](https://github.com/MutaLucem/dsh-plugin-integration) | DSH 插件集成/互通辅助插件。 | `` | MIT |
 | [nanshan1995/DSH-Plugin-Market](https://github.com/nanshan1995/DSH-Plugin-Market) | In-DSH plugin market with GitHub topic browse, cross-language search and a pre-install static security audit gate. | `` | MIT |
 | [Noob-stupid/dsh-github-login](https://github.com/Noob-stupid/dsh-github-login) | DSH GitHub 登录/OAuth 集成插件。 | `` | MIT |
+| [oil-oil/dsh-oil-creator](https://github.com/oil-oil/dsh-oil-creator) | AI 辅助本地创作工作台：核心片库独立可用，Screen Studio 录屏、字幕、封面、公众号文章与发布能力按需安装。 | `npx @deepseek-ai/dsh plugin --profile web add github:oil-oil/dsh-oil-creator` | MIT |
 | [omdsh-dev/dsh-sidechain](https://github.com/omdsh-dev/dsh-sidechain) | DSH side-conversation plugin (/side persistent, /btw one-shot forks). | `` | N/A |
 | [Owen718/snapgrep](https://github.com/Owen718/snapgrep) | 进程内 Rust 三元组索引插件，让 Pi/DSH 代码搜索比 ripgrep 快最高 70× 且结果一致 | `` | MIT |
 | [sugarforever/dsh-lark](https://github.com/sugarforever/dsh-lark) | Lark/Feishu integration host plugin for DSH (WebSocket channel). | `` | N/A |

@@ -37,6 +37,7 @@
 | [AKS1st/model-usage-plugin](https://github.com/AKS1st/model-usage-plugin) | 模型消耗统计 (musage-stats) | `` | MIT |
 | [AngelosZou/dsh-multi-folder](https://github.com/AngelosZou/dsh-multi-folder) | 主工作区多次级目录 | `` | MIT |
 | [asukasec/dsh-message-preview](https://github.com/asukasec/dsh-message-preview) | DSH 消息预览 UI 扩展。 | `` | MIT |
+| [ayuanwong/dsh-ux](https://github.com/ayuanwong/dsh-ux) | 长任务 UI 优化：思考/工具步骤收进稳定过程区、完成后自动折叠、详情随时展开；可选用小模型请求生成阶段名（仅展示）。 | `dsh plugin --profile <name> add <package>（monorepo bundle，见 packages/bundle）` | BSD-3-Clause |
 | [badai147/dsh-global-rules](https://github.com/badai147/dsh-global-rules) | Edit ~/.dsh/AGENTS.md global rules from DSH web settings panel. | `` | MIT |
 | [baihejiangnan/dsh-session-context-menu](https://github.com/baihejiangnan/dsh-session-context-menu) | 更好的右键菜单 | `` | MIT |
 | [bearllfleed/Dsh-FileExplorer](https://github.com/bearllfleed/Dsh-FileExplorer) | VS Code 风格文件浏览器+编辑器 | `` | MIT |
@@ -175,6 +176,7 @@
 | [XMoon/dsh-pi-tui](https://github.com/XMoon/dsh-pi-tui) | 基于 pi-tui 分支的 DSH 第三方终端 UI 插件（dsh --profile pi-tui） | `` | MIT |
 | [xxxxxxxyu/dsh-notify-sound](https://github.com/xxxxxxxyu/dsh-notify-sound) | DSH 通知提示音插件。 | `` | MIT |
 | [yanglongyun/dsh-ramify](https://github.com/yanglongyun/dsh-ramify) | DSH 内存/资源可视化插件 | `` | MIT |
+| [yanglongyun/ramify-dsh](https://github.com/yanglongyun/ramify-dsh) | 创意分支画布插件：树状工作区生成、对比、迭代多个可交互方案，安装后自动启动本地画布。 | 见 README（原生 DSH 插件，安装后自动启动本地画布） | MIT |
 | [yascitom/dsh-opencode-go-box](https://github.com/yascitom/dsh-opencode-go-box) | DSH opencode 风格的 Go 语言调试/运行盒子 UI 插件。 | `` | MIT |
 | [yejiming/dsh-museai-tavern](https://github.com/yejiming/dsh-museai-tavern) | 将 MuseAI 角色与页面搬进 DSH Web GUI 的插件（复用 DSH 模型，无密钥） | `` | MIT |
 | [Yuer6327/NoLetMe](https://github.com/Yuer6327/NoLetMe) | DSH 推理轨迹统计面板 | `` | MIT |

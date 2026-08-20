@@ -26,7 +26,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CAT_DIR = os.path.join(ROOT, "docs", "categories")
 SITE = "https://deepseekharnessplugins.com"
-SNAPSHOT_DATE = "2026-08-19"
+SNAPSHOT_DATE = "2026-08-21"
 TOP_N = 10  # featured rows shown per category inside the README index
 
 # 22 categories in the website's order (id, zh, en). ids == site route params.
