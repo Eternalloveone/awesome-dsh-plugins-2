@@ -18,16 +18,17 @@ genuine, qualifying extensions and respecting the star floor.
 
 ## Workflow
 
-### 1. Collect topic repos (WebFetch, paginated)
+### 1. Collect topic repos (gh Search API, paginated)
 
-- Fetch `https://github.com/topics/dsh-plugin?page=N` for `N = 1, 2, 3, …` with WebFetch.
-- GitHub topic pages are sorted by stars **descending**. Stop scanning when a page is
-  empty OR every repo on it is at/below the star floor — all later pages will also be
-  at/below the floor, so the sweep is complete.
-- For each page, extract `owner/repo` and its star count. Dedupe by lowercased name
-  across pages (the topic lists occasionally repeat a repo across pages).
-- Save the combined list to a JSON file:
-  `[{"name": "owner/repo", "stars": 725}, …]`
+- The `dsh-plugin` topic now has ~7,900 repos — WebFetch pagination needs ~260 pages.
+  Use the authenticated `gh` Search API instead (requires `gh` network access → run
+  Bash with `dangerouslyDisableSandbox: true`):
+  `gh api "search/repositories?q=topic:dsh-plugin&sort=stars&order=desc&per_page=100&page=N" --jq '.items[] | {name: .full_name, stars: .stargazers_count}'`
+- Top 1000 by stars = 10 pages. Results are sorted by stars descending; the diff
+  script's star floor makes deeper pages irrelevant.
+- Collect each page's `{name, stars}` into one JSON file:
+  `[{"name": "owner/repo", "stars": 725}, …]` (e.g. `jq -s . parts.jsonl > topic_repos.json`).
+- Dedupe by lowercased name across pages (the topic occasionally repeats a repo).
 
 ### 2. Diff against the catalog
 
