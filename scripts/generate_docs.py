@@ -26,7 +26,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CAT_DIR = os.path.join(ROOT, "docs", "categories")
 SITE = "https://deepseekharnessplugins.com"
-SNAPSHOT_DATE = "2026-08-21"
+SNAPSHOT_DATE = "2026-08-22"
 TOP_N = 10  # featured rows shown per category inside the README index
 
 # 22 categories in the website's order (id, zh, en). ids == site route params.
@@ -80,6 +80,11 @@ SLUG_MAP = {
     "agent_orchestration": "agents-workflows",
     "cost_observability": "billing",
     "agent-os": "agents-workflows",
+    "agent_os": "agents-workflows",
+    "knowledge": "knowledge-research",
+    "analysis": "knowledge-research",
+    "prompt": "developer-tools",
+    "security": "security",
     "memory": "knowledge-research",
     "security_audit": "security",
     "web_ui_customization": "web-ui",
