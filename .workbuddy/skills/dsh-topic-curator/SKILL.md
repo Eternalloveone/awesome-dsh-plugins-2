@@ -20,15 +20,28 @@ genuine, qualifying extensions and respecting the star floor.
 
 ### 1. Collect topic repos (gh Search API, paginated)
 
-- The `dsh-plugin` topic now has ~7,900 repos — WebFetch pagination needs ~260 pages.
-  Use the authenticated `gh` Search API instead (requires `gh` network access → run
-  Bash with `dangerouslyDisableSandbox: true`):
+- The `dsh-plugin` topic exploded to **~10,600 repos** (2026-08; 9923 of them were
+  `pushed` in 2026-08 alone). It is far too big for WebFetch pagination (~260 pages).
+- **Search API hard cap:** every query returns at most **1000 results**
+  (`page=11` → HTTP 422 "Only the first 1000 search results are available"). A single
+  `sort=stars` query therefore only ever sees the top-1000-by-stars — missing the
+  ~9,900 long-tail repos where genuine new small plugins hide.
+- **Full-coverage scan (recommended):** use
+  `scripts/full_topic_scan.py`. It partitions the topic into disjoint sub-queries
+  (star tiers for `>10`, then the `stars:<=10` remainder split by `pushed:` month,
+  recursively bisected by day when a bucket exceeds 1000) so every leaf is fully
+  retrievable, then dedupes by repo id. Outputs both a rich JSON and a
+  `diff_topic.py`-compatible `{name, stars}` list.
+  - `python3 scripts/full_topic_scan.py --dry-run` → print the partition plan + counts.
+  - `python3 scripts/full_topic_scan.py --execute` → fetch everything (rate-limited,
+    ~9 min; run Bash with `dangerouslyDisableSandbox: true`).
+  - `--only ">500,11..20` / `--since 2026-06` to scope a run.
+  - Writes `/tmp/dsh_topic_full.json` (rich) and `/tmp/dsh_topic_repos.json` (compat).
+- **Quick top-1000 only (legacy):** if you only want the popular slice,
   `gh api "search/repositories?q=topic:dsh-plugin&sort=stars&order=desc&per_page=100&page=N" --jq '.items[] | {name: .full_name, stars: .stargazers_count}'`
-- Top 1000 by stars = 10 pages. Results are sorted by stars descending; the diff
-  script's star floor makes deeper pages irrelevant.
-- Collect each page's `{name, stars}` into one JSON file:
-  `[{"name": "owner/repo", "stars": 725}, …]` (e.g. `jq -s . parts.jsonl > topic_repos.json`).
-- Dedupe by lowercased name across pages (the topic occasionally repeats a repo).
+  for N=1..10, then `jq -s . > topic_repos.json`. The diff script's star floor makes
+  deeper pages irrelevant for curation.
+- Dedupe by lowercased name (the topic occasionally repeats a repo).
 
 ### 2. Diff against the catalog
 

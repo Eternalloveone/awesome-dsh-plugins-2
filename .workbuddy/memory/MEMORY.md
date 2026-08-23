@@ -2,12 +2,21 @@
 
 ## Reusable conventions for the dsh-topic-curator workflow
 
-- **Topic size scaling (CRITICAL):** the `dsh-plugin` GitHub topic now has ~7,900 repos
-  (7,888 on 2026-08-19). Do NOT use WebFetch pagination for discovery — it needs ~260 pages.
-  Use the authenticated `gh` Search API instead:
+- **Topic size scaling (CRITICAL):** the `dsh-plugin` GitHub topic had ~7,900 repos on
+  2026-08-19, **10,554 in the morning of 2026-08-22, and 10,612 by night** — it is exploding
+  (9923 of those repos were `pushed` in 2026-08 alone). Do NOT use WebFetch pagination for
+  discovery — it needs 260+ pages. Use the authenticated `gh` Search API instead:
   `gh api "search/repositories?q=topic:dsh-plugin&sort=stars&order=desc&per_page=100"`
   (top 1000 by stars = 10 pages). Requires `gh` network access → run Bash with
   `dangerouslyDisableSandbox: true` (the sandbox blocks `gh api` network calls).
+  **GOTCHA:** the Search API caps a single query at 1,000 results (`page=11` → HTTP 422
+  "Only the first 1000 search results are available"); ~9,500 tail repos are never seen by a
+  plain `sort=stars` query. **SOLVED by `scripts/full_topic_scan.py`** (in the
+  dsh-topic-curator skill dir): partitions the topic into disjoint sub-queries — star tiers for
+  `stars>10` (6 tiers, all <1000) + the `stars:<=10` remainder split by `pushed:` calendar month,
+  recursively bisected by day when a bucket exceeds 1000 — so every leaf is fully retrievable.
+  Dry-run prints the partition plan; `--execute` fetches all (rate-limited, ~9 min). Outputs
+  `/tmp/dsh_topic_full.json` (rich) + `/tmp/dsh_topic_repos.json` (diff_topic.py-compatible).
 - **Diff:** `python3 scripts/diff_topic.py /tmp/topic_repos.json --catalog-dir data --star-floor 10`
   writes `/tmp/dsh_new_repos.json` with `above_floor` / `skipped` arrays of `[name, stars]`.
   Floor rule = skip stars ≤ 10 ("10 个 star 内的先不处理").
