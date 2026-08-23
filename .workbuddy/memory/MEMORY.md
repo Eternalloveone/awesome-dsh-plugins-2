@@ -13,8 +13,14 @@
   "Only the first 1000 search results are available"); ~9,500 tail repos are never seen by a
   plain `sort=stars` query. **SOLVED by `scripts/full_topic_scan.py`** (in the
   dsh-topic-curator skill dir): partitions the topic into disjoint sub-queries — star tiers for
-  `stars>10` (6 tiers, all <1000) + the `stars:<=10` remainder split by `pushed:` calendar month,
-  recursively bisected by day when a bucket exceeds 1000 — so every leaf is fully retrievable.
+  `stars>10` (6 tiers, all <1000) + the `stars:<=10` remainder split by `created:` month
+  (single-sided `created:YYYY-MM`), an overflowing month split into its days and a day into
+  24 adjacent hour buckets — so every leaf is fully retrievable.
+  **GOTCHA (measured 2026-08-23):** day-level `created:A..B` is END-INCLUSIVE
+  (`created:2026-08-13..2026-08-14` = 522+1702 = both days, exact). Query a single day as
+  `D..D`, a month as single-sided `YYYY-MM`, hours as adjacent buckets `T00..T01, T01..T02, …`
+  (boundary overlap absorbed by dedupe). `pushed:` has no hour precision and `stars:`
+  sub-filters are ignored in compound queries — `created:` is the only reliable dimension.
   Dry-run prints the partition plan; `--execute` fetches all (rate-limited, ~9 min). Outputs
   `/tmp/dsh_topic_full.json` (rich) + `/tmp/dsh_topic_repos.json` (diff_topic.py-compatible).
 - **Diff:** `python3 scripts/diff_topic.py /tmp/topic_repos.json --catalog-dir data --star-floor 10`

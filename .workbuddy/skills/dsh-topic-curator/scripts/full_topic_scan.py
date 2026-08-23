@@ -18,12 +18,28 @@ Partition strategy
 1. Star tiers (disjoint, cover everything with stars > 10):
        stars:>500 | 200..500 | 100..199 | 50..99 | 21..49 | 11..20
    Each tier is tiny (< 1000), fetched directly. If a tier ever overflows
-   (topic growth), it is recursively bisected on `pushed:` date.
+   (topic growth), it is recursively bisected on `created:` date.
 2. The `stars:<=10` remainder (the big bucket, ~9,900 repos) is split by
-   `pushed:` calendar month from 2025-01 to the CURRENT day. Each month is
-   usually < 1000; if a month still overflows it is bisected by DAY, and if a
-   single day still overflows it is bisected by HOUR — until <= 1000 (or until
-   MAX_DEPTH, at which point it is reported as OVER_CAP rather than silently dropped).
+   `created:` calendar month from 2025-01 to the CURRENT day. Each month is
+   usually < 1000; if a month still overflows it is split into its DAYS, and a
+   single day still overflows it is split into 24 adjacent HOURLY buckets —
+   until every leaf <= 1000 (or MAX_DEPTH, at which point it is reported as
+   OVER_CAP rather than silently dropped).
+
+   Why `created:` and not `pushed:`? GitHub's `pushed:` range does NOT support
+   sub-day precision and single days can exceed 1000 (e.g. 2026-08-14 = 1702),
+   and `stars:` sub-filters inside compound queries are ignored — only
+   `created:` supports hour precision AND composes with `stars:<=10`.
+
+   GITHUB QUIRK (measured 2026-08-23, don't "fix" this away): day-level
+   `created:A..B` is END-INCLUSIVE — it covers B's ENTIRE day.
+   `created:2026-08-13..2026-08-14` = 2224 = 522 + 1702 (both days, exact).
+   Therefore the script NEVER writes a day range with a different END day.
+   A "single day" is queried as the same-day pair `D..D` (verified = that day),
+   a month as the single-sided `YYYY-MM`, and hours as adjacent buckets
+   `D T00..D T01`, `D T01..D T02`, ..., `D T23..D+1 T00`. Adjacent hour buckets
+   are complete under BOTH closed and half-open END semantics; any boundary
+   instant captured twice is absorbed by the emit dedupe.
 
 Union of (star tiers) + (stars:<=10 split by pushed month/day/hour) == the whole
 topic, with no overlap.
@@ -57,6 +73,7 @@ Requires `gh` authenticated (run the Bash tool with dangerouslyDisableSandbox: t
 the sandbox blocks gh's network calls).
 """
 import argparse
+import calendar
 import datetime as dt
 import json
 import subprocess
@@ -82,14 +99,23 @@ STAR_TIERS = [
 ]
 
 
-def _gh(args, jq, per_page=1):
+def _gh(args, jq, per_page=1, paginate=False):
     """Run one gh api call. Returns (stdout_text, error_text). Honors timeout,
-    rate-limit backoff, and retry ceiling. Returns error '422' on hard cap."""
+    rate-limit backoff, and retry ceiling. Returns error '422' on hard cap.
+
+    paginate=True adds `--paginate` — safe ONLY for queries whose total <= CAP
+    (Search API hard-caps at 1000 and --paginate stops at the first 422 page).
+    Without it, a leaf with total > per_page silently returns just the first
+    page — that exact bug cost ~1,950 repos on 2026-08-23."""
     url = "search/repositories?q=" + urllib.parse.quote(args) + f"&per_page={per_page}"
     for attempt in range(MAX_RETRY):
         try:
+            cmd = ["gh", "api"]
+            if paginate:
+                cmd.append("--paginate")
+            cmd += [url, "--jq", jq]
             proc = subprocess.run(
-                ["gh", "api", url, "--jq", jq],
+                cmd,
                 capture_output=True, text=True, timeout=GH_TIMEOUT,
             )
         except subprocess.TimeoutExpired:
@@ -122,54 +148,18 @@ def gh_total(q):
 
 
 def gh_fetch_leaf(q):
-    """Fetch ALL items of a query known to have total_count <= CAP via --paginate."""
-    jq = ('.items[] | {name: .full_name, stars: .stargazers_count, '
-          'forks: .forks_count, language: (.language // ""), '
-          'pushed_at: .pushed_at, created_at: .created_at, '
-          'description: (.description // ""), html_url: .html_url, '
-          'topics: (.topics | join("|"))}')
-    out, err = _gh(q, jq, per_page=100)
-    if err == "422":
-        return []
-    items = []
-    for line in out.splitlines():
-        line = line.strip()
-        if line:
-            try:
-                items.append(json.loads(line))
-            except json.JSONDecodeError:
-                pass
-    return items
-
-
-# Star micro-tiers used to split a single day that still overflows CAP.
-# (GitHub's pushed: range does NOT support sub-day / hour precision, so we
-#  cannot bisect a day by time — instead we re-split that day by star count,
-#  which GitHub indexes reliably.)
-def _same_day(start, end):
-    """True if start and end fall on the same calendar day."""
-    s = dt.datetime.fromisoformat(start)
-    e = dt.datetime.fromisoformat(end)
-    return s.date() == e.date()
-
-
-# Languages tried when a single pushed-day still overflows CAP. GitHub's
-# `language:` filter is reliable; `(none)` catches repos with no language.
-LANG_SPLIT = ["TypeScript", "JavaScript", "Python", "Rust", "Go", "C++",
-              "Java", "Vue", "HTML", "Shell", "Ruby", "C#", "PHP", "(none)"]
-
-
-def gh_fetch_leaf(q):
     """Fetch ALL items of a query known to have total_count <= CAP via --paginate.
 
     Caller guarantees total <= CAP, so `gh api --paginate` returns the full set.
+    Items are kept LEAN ({name, stars}) on purpose: 7k+ repos with description
+    etc. (~100MB) repeatedly OOM-killed this run on a memory-tight machine
+    (2026-08-23); downstream diff/audit only ever needs name + stars (audit
+    agents WebFetch the repo themselves).
     """
-    jq = ('.items[] | {name: .full_name, stars: .stargazers_count, '
-          'forks: .forks_count, language: (.language // ""), '
-          'pushed_at: .pushed_at, created_at: .created_at, '
-          'description: (.description // ""), html_url: .html_url, '
-          'topics: (.topics | join("|"))}')
-    out, err = _gh(q, jq, per_page=100)
+    jq = '.items[] | {name: .full_name, stars: .stargazers_count}'
+    out, err = _gh(q, jq, per_page=100, paginate=True)
+    if err and err != "422":
+        sys.stderr.write(f"[leaf ERROR {err}] q={q} — fetched items may be PARTIAL\n")
     items = []
     for line in out.splitlines():
         line = line.strip()
@@ -181,20 +171,69 @@ def gh_fetch_leaf(q):
     return items
 
 
-def recursive_scan(base_q, start, end, depth, over_cap, emit):
-    """Bisect a `created:` range until each leaf <= CAP, emitting leaves via `emit`.
+def _next_day(d):
+    """'YYYY-MM-DD' -> next day's 'YYYY-MM-DD'."""
+    return (dt.date.fromisoformat(d) + dt.timedelta(days=1)).isoformat()
 
-    GitHub's `created:` filter (incl. hour precision) is reliable, unlike
-    `pushed:` (no sub-day) or `stars:` inside other ranges (often ignored).
-    Ladder: created month -> day -> hour. Every leaf is fetched (total <= CAP
+
+def _days_in_month(m):
+    """'YYYY-MM' -> list of 'YYYY-MM-DD' for every day of that month.
+
+    The current (partial) month is truncated to today — future days would
+    return total_count 0 anyway, but truncating saves a few API calls.
+    """
+    y, mo = int(m[:4]), int(m[5:])
+    ndays = calendar.monthrange(y, mo)[1]
+    if m == dt.date.today().strftime("%Y-%m"):
+        ndays = dt.date.today().day
+    return [dt.date(y, mo, d).isoformat() for d in range(1, ndays + 1)]
+
+
+def _subdivide(spec):
+    """Return child created-specs covering `spec`, or [] if it cannot be split.
+
+    Granularity by spec shape:
+      'YYYY-MM'           -> each day of that month ('YYYY-MM-DD')
+      'YYYY-MM-DD'        -> 24 adjacent hour buckets
+                             ('D T00..D T01', ..., 'D T22..D T23', 'D T23..D+1 T00')
+      hour-level '..'     -> cannot split finer (1h is the finest granularity
+                             we trust) -> caller marks OVER_CAP
+
+    See module docstring for the END-INCLUSIVE day-range quirk that forces
+    this same-day / adjacent-bucket design.
+    """
+    if len(spec) == 7:  # month -> days
+        return _days_in_month(spec)
+    if len(spec) == 10:  # day -> 24 adjacent hour buckets
+        nxt = _next_day(spec)
+        return ([f"{spec}T{h:02d}..{spec}T{h+1:02d}" for h in range(23)] +
+                [f"{spec}T23..{nxt}T00"])
+    return []  # hour-level (or unknown): cannot subdivide
+
+
+def recursive_scan(base_q, spec, depth, over_cap, emit, flush):
+    """Split a `created:` spec until each leaf <= CAP, emitting leaves via `emit`.
+
+    GitHub's `created:` filter (incl. hour precision) is the only reliable
+    dimension — `pushed:` has no sub-day precision and `stars:` sub-filters
+    inside compound queries are ignored. Every leaf is fetched (total <= CAP
     guaranteed) and passed to `emit(item)` immediately — never accumulated in a
     big list — so memory stays flat even for 10k+ repos in one month.
 
-    start/end are 'YYYY-MM-DD' (month/day bisection) or 'YYYY-MM-DDTHH'
-    (hour bisection — detected by a 'T' in the string).
+    IMPORTANT GitHub quirk (measured 2026-08-23): day-level `created:A..B` is
+    END-INCLUSIVE (covers B's entire day), so a "single day" is always queried
+    as the same-day pair `D..D` and hours as adjacent buckets — never a day
+    range with a different END day.
+
+    flush() is invoked after EVERY leaf (not just at month boundaries) so an
+    interrupted run still leaves usable data on disk for --resume.
+
+    spec shapes:
+      'YYYY-MM'                            month (single-sided query)
+      'YYYY-MM-DD'                         single day (queried as D..D)
+      'YYYY-MM-DDTHH..YYYY-MM-DDTHH'       adjacent hour bucket
     """
-    rng = f" created:{start}..{end}"
-    q = base_q + rng
+    q = f"{base_q} created:{spec}"
     c = gh_total(q)
     time.sleep(SLEEP)
     if c < 0:
@@ -202,46 +241,41 @@ def recursive_scan(base_q, start, end, depth, over_cap, emit):
     if c == 0:
         return
     if c <= CAP:
+        n = 0
         for it in gh_fetch_leaf(q):
-            emit(it)
-        return
+            n += emit(it)
+        sys.stdout.write(f"      [leaf created:{spec}] n={n}\n")
+        sys.stdout.flush()
+        flush(full_only=True)  # persist full.json after every leaf (cheap);
+        return                  # compat json is refreshed at partition end
     if depth >= MAX_DEPTH:
         over_cap.append((q, c))
         return
-    if "T" in start:  # already at hour level -> cannot subdivide further
+    subs = _subdivide(spec)
+    if not subs:
         over_cap.append((q, c))
         return
-    s = dt.datetime.fromisoformat(start)
-    e = dt.datetime.fromisoformat(end)
-    if s.date() == e.date() and s.hour == 0 and e.hour == 0:
-        # same calendar day -> bisect by HOUR
-        mid = s + (e - s) // 2
-        recursive_scan(base_q, start, mid.strftime("%Y-%m-%dT%H"), depth + 1, over_cap, emit)
-        recursive_scan(base_q, mid.strftime("%Y-%m-%dT%H"), end, depth + 1, over_cap, emit)
-    else:
-        # bisect by DAY (or month boundary)
-        mid = s + (e - s) // 2
-        recursive_scan(base_q, start, mid.strftime("%Y-%m-%d"), depth + 1, over_cap, emit)
-        recursive_scan(base_q, mid.strftime("%Y-%m-%d"), end, depth + 1, over_cap, emit)
+    for sub in subs:
+        recursive_scan(base_q, sub, depth + 1, over_cap, emit, flush)
 
 
 # --------------------------------------------------------------------------- #
 # partition plan
 # --------------------------------------------------------------------------- #
 def month_ranges():
-    """Yield (label, start, end) for each calendar month from 2025-01 to TODAY.
+    """Yield (label, month) for each calendar month from 2025-01 to TODAY.
 
-    The current (partial) month ends at *tomorrow* (today + 1 day) so repos
-    created today are included — GitHub's `created:..END` is exclusive of END.
+    Month is returned as a single-sided 'YYYY-MM' spec (queried directly as
+    `created:YYYY-MM`) — day-level `A..B` ranges are END-INCLUSIVE, so we avoid
+    them entirely and let recursive_scan split an overflowing month into days.
     """
     out = []
     start = dt.date(2025, 1, 1)
     today = dt.date.today()
     cur = start
     while cur <= today:
+        out.append((cur.strftime("%Y-%m"), cur.strftime("%Y-%m")))
         nxt = (cur.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
-        end = nxt.isoformat() if nxt <= today else (today + dt.timedelta(days=1)).isoformat()
-        out.append((cur.strftime("%Y-%m"), cur.isoformat(), end))
         cur = nxt
     return out
 
@@ -252,8 +286,10 @@ def build_plan(only=None, since=None):
     Partition strategy (pure `created:` dimension, which GitHub indexes
     reliably incl. sub-day precision):
       1. Star tiers (>10 stars) — each tiny, fetched directly.
-      2. stars:<=10 long tail — split by created month; each month bisected by
-         the recursive ladder (month -> day -> hour) until every leaf <= 1000.
+      2. stars:<=10 long tail — split by created month (single-sided
+         `created:YYYY-MM`); any month that overflows is subdivided by
+         recursive_scan (month -> day -> 24 adjacent hour buckets) until every
+         leaf <= 1000.
     """
     plan = []
     for label, qual in STAR_TIERS:
@@ -261,10 +297,10 @@ def build_plan(only=None, since=None):
             continue
         plan.append((f"stars:{label}", f"{BASE} {qual}", False))
     if (not only) or ("<=10" in only):
-        for label, s, e in month_ranges():
+        for label, m in month_ranges():
             if since and label < since:
                 continue
-            plan.append((f"<=10 {label}", f"{BASE} stars:<=10 created:{s}..{e}", True))
+            plan.append((f"<=10 {label}", f"{BASE} stars:<=10 created:{m}", True))
     return plan
 
 
@@ -279,7 +315,7 @@ def main():
     ap.add_argument("--execute", dest="execute", action="store_true",
                     help="actually fetch every leaf (slow, rate-limited)")
     ap.add_argument("--only", help="comma list of star-tier labels to scan, e.g. '>500,11..20'")
-    ap.add_argument("--since", help="only pushed-month buckets >= this YYYY-MM (<=10 tier)")
+    ap.add_argument("--since", help="only created-month buckets >= this YYYY-MM (<=10 tier)")
     ap.add_argument("--resume", action="store_true",
                     help="skip buckets whose repos are already present in --out")
     ap.add_argument("--out", default="/tmp/dsh_topic_full.json")
@@ -311,16 +347,16 @@ def main():
         except (FileNotFoundError, json.JSONDecodeError):
             pass
 
-    def flush():
-        seen = {}
-        for it in all_items:
-            seen.setdefault(it["name"].lower(), it)
-        uniq = list(seen.values())
+    def flush(full_only=False):
+        # Items are lean {name, stars} (see gh_fetch_leaf), so all_items is
+        # tiny and writing it is cheap — safe to do after every leaf. emit()
+        # already guarantees uniqueness, so we write all_items as-is (no
+        # seen/uniq copy — that copy + big dicts is what OOM-killed v9/v10).
         with open(args.out, "w", encoding="utf-8") as f:
-            json.dump(uniq, f, ensure_ascii=False, indent=2)
-        with open(args.compat, "w", encoding="utf-8") as f:
-            json.dump([{"name": r["name"], "stars": r["stars"]} for r in uniq],
-                      f, ensure_ascii=False, indent=2)
+            json.dump(all_items, f, ensure_ascii=False, indent=2)
+        if not full_only:
+            with open(args.compat, "w", encoding="utf-8") as f:
+                json.dump(all_items, f, ensure_ascii=False, indent=2)
         sys.stdout.flush()
 
     if args.dry_run:
@@ -350,9 +386,10 @@ def main():
                         all_items.append(it)
                         fetched += 1
             else:
-                # Overflow: bisect on created date (recursive_scan ladder:
-                # month -> day -> hour, every leaf <= CAP before fetching).
-                s, e = base_q.split("created:")[1].split("..")
+                # Overflow: subdivide the created spec (recursive_scan ladder:
+                # month -> day -> 24 adjacent hour buckets, every leaf <= CAP
+                # before fetching).
+                spec = base_q.split("created:")[1].strip()
 
                 def emit(it, _sn=seen_names, _ai=all_items):
                     if it["name"].lower() not in _sn:
@@ -363,7 +400,7 @@ def main():
 
                 before = len(all_items)
                 recursive_scan(base_q.split(" created:")[0].strip(),
-                               s, e, 0, over_cap, emit)
+                               spec, 0, over_cap, emit, flush)
                 fetched = len(all_items) - before
         except Exception as e:  # never let one partition kill the whole run
             sys.stderr.write(f"[PARTITION FAIL] {label}: {e}\n")

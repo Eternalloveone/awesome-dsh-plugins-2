@@ -28,15 +28,20 @@ genuine, qualifying extensions and respecting the star floor.
   ~9,900 long-tail repos where genuine new small plugins hide.
 - **Full-coverage scan (recommended):** use
   `scripts/full_topic_scan.py`. It partitions the topic into disjoint sub-queries
-  (star tiers for `>10`, then the `stars:<=10` remainder split by `pushed:` month,
-  recursively bisected by day when a bucket exceeds 1000) so every leaf is fully
-  retrievable, then dedupes by repo id. Outputs both a rich JSON and a
+  (star tiers for `>10`, then the `stars:<=10` remainder split by `created:` month —
+  single-sided `created:YYYY-MM`; an overflowing month is split into its days and a
+  day into 24 adjacent hour buckets) so every leaf is fully
+  retrievable, then dedupes by repo name. Outputs both a rich JSON and a
   `diff_topic.py`-compatible `{name, stars}` list.
   - `python3 scripts/full_topic_scan.py --dry-run` → print the partition plan + counts.
   - `python3 scripts/full_topic_scan.py --execute` → fetch everything (rate-limited,
     ~9 min; run Bash with `dangerouslyDisableSandbox: true`).
   - `--only ">500,11..20` / `--since 2026-06` to scope a run.
   - Writes `/tmp/dsh_topic_full.json` (rich) and `/tmp/dsh_topic_repos.json` (compat).
+  - **GOTCHA (measured 2026-08-23):** day-level `created:A..B` is END-INCLUSIVE —
+    `created:2026-08-13..2026-08-14` = 522 + 1702 = both days. Never write a day
+    range with a different END day; query a single day as `D..D`, a month as
+    single-sided `YYYY-MM`, and hours as adjacent buckets `T00..T01, T01..T02, ...`.
 - **Quick top-1000 only (legacy):** if you only want the popular slice,
   `gh api "search/repositories?q=topic:dsh-plugin&sort=stars&order=desc&per_page=100&page=N" --jq '.items[] | {name: .full_name, stars: .stargazers_count}'`
   for N=1..10, then `jq -s . > topic_repos.json`. The diff script's star floor makes
