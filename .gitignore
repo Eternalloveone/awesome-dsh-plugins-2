@@ -1,6 +1,8 @@
 # Local dependencies and caches
 node_modules/
 .pnpm-store/
+__pycache__/
+*.pyc
 
 # Secrets and local environments
 .env
