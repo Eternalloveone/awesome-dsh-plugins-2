@@ -191,7 +191,6 @@
 | [sjscy05/matlab-modelsim-vivado-plugin](https://github.com/sjscy05/matlab-modelsim-vivado-plugin) | EDA toolchain (mmv_*): MATLAB/ModelSim/Vivado full-flow compile, simulate, and synthesize via locally installed executables. | `pnpm dsh plugin --profile web add ./matlab-modelsim-vivado-plugin` | MIT; Spawns MATLAB/ModelSim/Vivado subprocesses directly (bypasses dsh shell approval/sandbox); runs arbitrary scripts and Tcl with local file access. |
 | [sliverp/deepseek-harness-dingtalk](https://github.com/sliverp/deepseek-harness-dingtalk) | 钉钉通道: 外部 IM 触发 DSH agent | `` | MIT |
 | [sliverp/deepseek-harness-lark](https://github.com/sliverp/deepseek-harness-lark) | 飞书通道: 外部 IM 触发 DSH agent | `` | MIT |
-| [slywalker2006/dsh-passwords](https://github.com/slywalker2006/dsh-passwords) | DSH 凭据/密码管理插件。 | `` | BSD-3-Clause |
 | [Smalldy/godot-bridge](https://github.com/Smalldy/godot-bridge) | DSH 原生 Godot 4.x 游戏内 TCP 控制插件（16 个 godot_* 工具替代 godot-mcp） | `` | MIT |
 | [STARDUSTLC666/dsh-codex-port](https://github.com/STARDUSTLC666/dsh-codex-port) | DSH 的 Codex 能力移植插件，引入代码智能体能力。 | `` | MIT |
 | [STARDUSTLC666/dsh-docker](https://github.com/STARDUSTLC666/dsh-docker) | Container management plugin: docker ps/logs/inspect/exec/manage via the official subprocess service. | `` | MIT |

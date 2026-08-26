@@ -4,6 +4,7 @@
 
 | Plugin | Capability | Install or mount | License / Risk |
 | --- | --- | --- | --- |
+| [TongY1n/ui-muyu](https://github.com/TongY1n/ui-muyu) | 赛博木鱼：Web 悬浮小摆件，点击敲击累积功德、可拖拽，刷新不丢进度 | `dsh plugin --profile web add github:TongY1n/ui-muyu` | MIT; 纯浏览器 UI；无网络请求、无 API Key、无文件/会话/凭据访问；仅 localStorage 存功德/位置/配色 |
 | [Sutera-Diffusus/dsh-whale-musume](https://github.com/Sutera-Diffusus/dsh-whale-musume) | 在 DSH Web 界面右下角提供可拖拽看板娘：监听工具运行状态切换工作/待机立绘（90+ 张，含节日换装与 13 种梗表情）、530+ 条台词与定时闲聊、摸头/分区互动特效、养成（心情/好感/等级/签到/每日任务）与 39 个成就墙、戳泡泡小游戏、可选天气陪伴与全屏天气特效，设置项集成进 DSH 设置页。 | `dsh plugin --profile web add github:Sutera-Diffusus/dsh-whale-musume` | MIT; 官方测试环境仅 Windows 10/11 + Edge/Chrome，绑定 DSH 0.1.0-rc.6 前端结构，DSH 升级后注入点可能失效；脚本模式修改内置前端文件（务必保留备份目录，勿与 bundle 模式混用）；启用天气需联网并可能填入第三方 API Key；package.json 标记 private:true，仅能经 github: 源安装。 |
 | [QCYTSN/dsh-dafeiyu](https://github.com/QCYTSN/dsh-dafeiyu) | Windows 桌面原生 Agent 伴侣：由 DSH 会话真实事件驱动的透明无边框始终置顶窗口，展示思考/工作/等待/完成/错误状态；随 DSH 启停 | `pnpm exec dsh plugin --profile web add dsh-dafeiyu@alpha（Windows/WSL2；或 GitHub Release .tgz: dsh plugin --profile web add "...tgz"）` | MIT |
 | [PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet) | DSH Web 界面桌面宠物：51 个透明 webm 动画随机链播、屏幕漫游、点击/拖拽；附提示词配方+AI 视频素材生成链可自造宠物 | `dsh plugin --profile web add dsh-pet (本地包: dsh plugin --profile web add file:D:/path/to/dsh-pet)` | MIT |

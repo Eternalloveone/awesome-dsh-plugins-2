@@ -22,7 +22,6 @@
 | [asdf17128/dsh-doctor](https://github.com/asdf17128/dsh-doctor) | DSH 自检/诊断插件，检查配置与环境健康。 | `` | N/A |
 | [ben7am1n/dsh-claude-marketplace](https://github.com/ben7am1n/dsh-claude-marketplace) | DSH 插件市场，可在 DSH 内浏览/安装 Claude 技能类扩展。 | `` | N/A |
 | [benzhoupo/dsh-effort-config](https://github.com/benzhoupo/dsh-effort-config) | DSH 推理强度（effort）配置插件，调节模型推理投入。 | `` | N/A |
-| [bradeGithub/DSH-Plugins-Marketplace](https://github.com/bradeGithub/DSH-Plugins-Marketplace) | DSH 插件市场，提供插件浏览/安装入口。 | `` | N/A |
 | [CH4ACKO3/dsh-harmony](https://github.com/CH4ACKO3/dsh-harmony) | Runtime patch framework that modifies other DSH plugins via source patches. | `` | MIT |
 | [chaos-03x/dsh-agy](https://github.com/chaos-03x/dsh-agy) | Google Antigravity OAuth adapter for DSH (multi-account, 429 rotation). | `` | N/A |
 | [cokiscarazo-rgb/dsh-session-management](https://github.com/cokiscarazo-rgb/dsh-session-management) | 会话归档/真删/批量导出 | `` | MIT |
