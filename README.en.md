@@ -2,7 +2,7 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 ![Catalog](https://img.shields.io/badge/catalog-2296-2563eb)
-![Verified](https://img.shields.io/badge/verified-1713-16a34a)
+![Verified](https://img.shields.io/badge/verified-1729-16a34a)
 ![License](https://img.shields.io/badge/license-MIT-f59e0b)
 
 **English** | [简体中文](README.md) | [🌐 Website](https://deepseekharnessplugins.com)
@@ -11,7 +11,7 @@
 
 DeepSeek Harness is in **Developer Preview** and uses Cordis' “Everything is a plugin” architecture. A DSH profile composes bundles; external extensions commonly declare their loading mechanism through a `dsh` field in `package.json` and a patch file.[1] [2] Test every installation against your own DSH release before relying on it.
 
-**Snapshot: 2026-08-22.** This edition's main directory includes **1713 verified plugins and skills whose source or install manifests were inspected**, organized into 22 capability categories (aligned with the companion site [deepseekharnessplugins.com](https://deepseekharnessplugins.com)); the full listing is split into 22 category pages under [`docs/categories/`](docs/categories/). Plus a **full aggregated catalog — [`CATALOG.md`](CATALOG.md), 2,296 repositories** — merged and deduplicated from GitHub search and several community directories. **Aggregation is not an installation, compatibility, maintenance, or security certification**; only the verified subset enters the main directory, with evidence in [data/verified-plugins.csv](data/verified-plugins.csv) and [data/audit-results.csv](data/audit-results.csv).[3]
+**Snapshot: 2026-08-22.** This edition's main directory includes **1729 verified plugins and skills whose source or install manifests were inspected**, organized into 22 capability categories (aligned with the companion site [deepseekharnessplugins.com](https://deepseekharnessplugins.com)); the full listing is split into 22 category pages under [`docs/categories/`](docs/categories/). Plus a **full aggregated catalog — [`CATALOG.md`](CATALOG.md), 2,296 repositories** — merged and deduplicated from GitHub search and several community directories. **Aggregation is not an installation, compatibility, maintenance, or security certification**; only the verified subset enters the main directory, with evidence in [data/verified-plugins.csv](data/verified-plugins.csv) and [data/audit-results.csv](data/audit-results.csv).[3]
 
 | Navigation | Purpose |
 | --- | --- |
@@ -65,7 +65,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [WizisCool/dsh-ears](https://github.com/WizisCool/dsh-ears) | Voice input for DSH web UI with Web Speech, local GPU Whisper, Groq, Aliyun Bailian, Tencent Cloud and OpenAI-compatible ASR backends, plus automatic polishing. | `dsh plugin --profile web add dsh-ears` | MIT |
 | [wlj521/dsh-ui-tweaks](https://github.com/wlj521/dsh-ui-tweaks) | Adjust DSH UI via settings panel; GitBar branch/diff ops, real PTY terminal, IDE project launcher, archive restore/delete, MCP server management. | `npx -y @deepseek-ai/dsh plugin --profile web add dsh-ui-tweaks (or github:wlj521/dsh-ui-tweaks)` | MIT; Contains browser PTY terminal, git push, archived-log deletion, cordis.patch.yml rewriting — review source before install. |
 
-> This category has **221** verified entries, [view the full list →](docs/categories/ui-experience.en.md)
+> This category has **224** verified entries, [view the full list →](docs/categories/ui-experience.en.md)
 
 ### Sessions & Messages
 
@@ -82,7 +82,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [SiriLee/dsh-rewind](https://github.com/SiriLee/dsh-rewind) | Claude Code-style in-place /rewind for DSH web profile: cut conversation back to any earlier user message, optional workspace-file restore from disk-persisted before-backups, per-message button + candidate picker UI | `dsh plugin --profile web add dsh-rewind-plugin (git installs need allowBuilds in profile's pnpm-workspace.yaml)` | MIT; npm name is dsh-rewind-plugin (dsh-rewind taken); known <=v0.2.4 marker-turn bug can corrupt client replay; ships dsh-rewind-repair |
 | [tinqiao-oss/engramory](https://github.com/tinqiao-oss/engramory) | 便携记忆协议：常驻规则 + 记忆纪律（SKILL.md），纯 markdown 笔记单一库跨宿主共享；原生插件 dsh-engramory 用 ctx.tools.guard() 把常驻索引的体积上限做成单调拒绝（写前 deny 而非提醒），并经 ctx.inject(['skills']) 在运行时注册 skill，不依赖文件落到五个 skill 根之一 | `dsh plugin --profile <name> add dsh-engramory（npm 包 dsh-engramory；亦可 python tools/engramory_init.py dsh --install-skill 只装 skill + AGENTS.md 块）` | MIT; dsh 仍是开发者预览、插件 API 可能变化；0.2.0 装上永不激活（issue #8），须 0.2.1 及以上；记忆以明文 markdown 存本地 .engramory-memory/，位于项目仓内时应加入 git 忽略；插件本身无 exec/eval/网络请求/环境变量读取 |
 
-> This category has **106** verified entries, [view the full list →](docs/categories/sessions-messages.en.md)
+> This category has **110** verified entries, [view the full list →](docs/categories/sessions-messages.en.md)
 
 ### Other
 
@@ -167,7 +167,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [liangmianya/dsh-synapse](https://github.com/liangmianya/dsh-synapse) | DeepSeek Harness Web 可视化会话工作区：把会话/追问/分支渲染为可拖拽缩放的画布式会话地图，双向同步原生对话，按 callId 折叠工具过程，持久化画布布局 | `corepack pnpm dsh plugin --profile web add github:liangmianya/dsh-synapse && corepack pnpm dsh web（卸载：corepack pnpm dsh plugin --profile web remove dsh-synapse）` | MIT; 仅支持 web profile 且要求 DSH 2026-08+ 与 Node>=22.19；两个 dsh web 实例共享同一 profile 写同一 workspaces.json 存在覆盖风险（作者建议单实例运行） |
 | [omdsh-dev/stent](https://github.com/omdsh-dev/stent) | 受 MC Fabric mixin 启发的 Cordis/DSH hook 处理器：提供 stent（纯转换服务）、stent-api（兼容门面）、stent-dsh（DSH 门面/preload/配置文件引导）三件套，向 DSH web 客户端挂载钩子与 facade、发布浏览器 closure 工厂 bundle，并注入 launcher preload | `dsh plugin --profile web add @oh-my-dsh/stent-pack（@oh-my-dsh/stent-pack@0.1.1 已在 npm 发布）` | BSD-3-Clause; 依赖 DSH 上游 @deepseek-ai/dsh-* rc 轨道包，registry 版本跳跃频繁（rc.3→rc.6）；仓库无独立 LICENSE 文件（仅 package.json/npm 声明 BSD-3-Clause）；版本 0.1.x 较新，建议安装前验证 npm 包完整性 |
 
-> This category has **208** verified entries, [view the full list →](docs/categories/web-ui.en.md)
+> This category has **211** verified entries, [view the full list →](docs/categories/web-ui.en.md)
 
 ### Themes & Skins
 
@@ -260,7 +260,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [CC19990113/dsh-plugin-codegraph](https://github.com/CC19990113/dsh-plugin-codegraph) | Lets the agent answer structural code questions (where declared, who calls it, impact, reachability) via 10 read-only codegraph operations. | `dsh plugin --profile <name> add dsh-plugin-codegraph` | MIT; dsh is in developer preview; indexer tied to schema v4 of the codegraph CLI. |
 | [ExElectron/dsh-tool-hongtou](https://github.com/ExElectron/dsh-tool-hongtou) | Generates standard red-header official documents (/hongtou) as Word 2003 XML with deterministic numbering and formatting. | `dsh plugin --profile web add dsh-tool-hongtou` | MIT; China-specific official-document formatting; requires Node >=22.19 and DSH web profile restart after mount. |
 
-> This category has **230** verified entries, [view the full list →](docs/categories/agents-workflows.en.md)
+> This category has **231** verified entries, [view the full list →](docs/categories/agents-workflows.en.md)
 
 ### Integrations & Sharing
 
@@ -303,7 +303,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [Tencent/WeKnora](https://github.com/Tencent/WeKnora) | 向 DSH agent 注册 4 个只读知识库工具：weknora_search（混合检索）、weknora_read_document、weknora_ask（带引用的合成回答）、weknora_list_knowledge_bases；让企业文档可被检索 | `dsh plugin --profile web add @wxg-prc-cpg/dsh-weknora（或本地: dsh plugin --profile web add ./packages/dsh-weknora），随后 export WEKNORA_BASE_URL / WEKNORA_API_KEY / WEKNORA_KNOWLEDGE_BASE_IDS 并运行 dsh web` | MIT; 仓库本身是独立高 star 的 RAG 平台，与 dsh-plugin topic 无关；DSH 集成是官方插件入口，请用最小权限 API key（仅 retrieve） |
 | [pypcfx-glitch/risk-rule-design](https://github.com/pypcfx-glitch/risk-rule-design) | 风控规则挖掘工具：对指定数据集做数据质检、单规则挖掘、并行规则集最优组合搜索（F1 平衡），输出自包含 HTML 分析报告；附带 risk-rule-design 专家技能 | `dsh plugin --profile web install dsh-plugin-risk-rule-design（或 dsh plugin --profile web add "github:pypcfx-glitch/risk-rule-design"，GitHub 直装需手动注册 bundle）` | MIT; 作者自述为『第一个 dsh 插件，还在完善中』；homepage 字段指向付费课程页而非项目主页；GitHub 直装方式不会自动注册 bundle，需手动编辑 profile package.json；仓库创建于 2026-08-19 |
 
-> This category has **115** verified entries, [view the full list →](docs/categories/knowledge-research.en.md)
+> This category has **118** verified entries, [view the full list →](docs/categories/knowledge-research.en.md)
 
 ### Design, Media & Vision
 
@@ -354,7 +354,7 @@ An entry in this section has at least one verified native signal: a reproducible
 | [mishibeikejie/zat-dsh-engine](https://github.com/mishibeikejie/zat-dsh-engine) | DSH 可视化插件市场：Settings→Plugins 增加 Plugin Market 标签，GitHub dsh-plugin topic 1700+ 仓库浏览/搜索/一键安装-更新-卸载，AI 找插件 + 安装前健康与安全检查，断网自动镜像回退 | `dsh plugin --profile web add github:mishibeikejie/zat-dsh-engine; 移除: dsh plugin --profile web remove zat-dsh-engine` | MIT; 本质是包管理器：执行 pnpm 安装第三方插件的 prepare/postinstall 脚本、读取本地 git 凭证（star/GitHub token）并写 profile 配置，务必先看其安全扫描结果 |
 | [sikadi233-hub/minecraft-dev](https://github.com/sikadi233-hub/minecraft-dev) | Gives DSH agents Minecraft plugin/mod development: scaffold projects, run Gradle builds, load version-aware API references, delegate to a 4-subagent team. | `dsh plugin --profile web add minecraft-dev` | MIT; mc_gradle depends on taskkill (win32 only); local user skills with same names override bundled ones. |
 
-> This category has **113** verified entries, [view the full list →](docs/categories/ecosystem-resources.en.md)
+> This category has **115** verified entries, [view the full list →](docs/categories/ecosystem-resources.en.md)
 
 ### Just for Fun
 

@@ -128,6 +128,7 @@
 | [hxyz486/dsh-archived-conversations](https://github.com/hxyz486/dsh-archived-conversations) | DSH 归档会话浏览 UI 插件。 | `` | MIT |
 | [iyllyt/dsh-btw](https://github.com/iyllyt/dsh-btw) | DSH 旁注/批注(btw)交互 UI 插件。 | `` | MIT |
 | [jesse-njx/dsh-voice](https://github.com/jesse-njx/dsh-voice) | DSH 语音输入/输出插件。 | `` | MIT |
+| [Jiyr0119/dsh-workspace-explorer](https://github.com/Jiyr0119/dsh-workspace-explorer) | DSH Web 会话头部工作区文件胶囊按钮：懒加载目录树、点击/拖拽插入 [file: 相对路径] 引用、多选批量插入、搜索过滤、大文件分页预览、分屏预览与面板内文本编辑 | `dsh plugin --profile web add -w @jiyr0119/dsh-workspace-explorer@latest` | MIT |
 | [jjxjjjjiik-bot/dsh-chat-timeline](https://github.com/jjxjjjjiik-bot/dsh-chat-timeline) | 1:1 复刻 DeepSeek 官网右侧对话导航栏的 DSH 插件 | `` | MIT |
 | [JuneLearn/dsh-reasoning-settings](https://github.com/JuneLearn/dsh-reasoning-settings) | 推理强度设置 | `` | MIT |
 | [kaziii/dsh-github-connector](https://github.com/kaziii/dsh-github-connector) | GitHub 连接器（PR 状态条） | `` | MIT |
@@ -152,6 +153,7 @@
 | [Max-Samson/dsh-usage-chart](https://github.com/Max-Samson/dsh-usage-chart) | DSH 用量图表 UI 插件。 | `` | MIT |
 | [maydaytyh/dshx-terminal](https://github.com/maydaytyh/dshx-terminal) | DSHx 终端界面插件。 | `` | MIT |
 | [mengyun233/dsh-codex-pet](https://github.com/mengyun233/dsh-codex-pet) | Codex 桌宠迁移插件 | `` | MIT |
+| [minivv/dsh-agent-skills](https://github.com/minivv/dsh-agent-skills) | DSH 设置页管理 Agent Skills：扫描 ~/.agents、~/.claude、~/.codex、~/.config/opencode、~/.gemini 技能目录、启停/搜索/监听变更、可选接管 DSH 技能来源，不修改原始 SKILL.md | `dsh plugin --profile web add dsh-agent-skills` | MIT |
 | [Mombrane/dsh-subagent-monitor](https://github.com/Mombrane/dsh-subagent-monitor) | Realtime subagent run-monitor panel for DSH web GUI. | `` | MIT |
 | [monk233/dsh-plugin-manager](https://github.com/monk233/dsh-plugin-manager) | 插件管理（启用/禁用/删除） | `` | MIT |
 | [Mooling0602/dsh-web-file-uploader](https://github.com/Mooling0602/dsh-web-file-uploader) | DSH Web 文件上传插件（模型感知注入 / SHA-256 去重 / 内容寻址） | `` | MIT |
@@ -166,6 +168,7 @@
 | [orriduck/dsh-tui](https://github.com/orriduck/dsh-tui) | Session-aware terminal UI for DeepSeek Harness (start/continue/resume sessions, permission-preset switching). | `npm install -g github:orriduck/dsh-tui` | MIT; Terminal UI driving DSH sessions; can switch permission preset incl. typed FULL ACCESS confirmation; optional Herdr bridge. |
 | [PAKIKNOWLEDGE/dsh-client-ui-skin-claude](https://github.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude) | Claude 风格皮肤 | `` | MIT |
 | [penguin-oo/dsh-bookmarks](https://github.com/penguin-oo/dsh-bookmarks) | DSH Web 回复书签插件（笔记/标签 / 跨会话中心 / 一键 Markdown 导出） | `` | MIT |
+| [Physicolor/dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | DSH 纯客户端 UI 调和：归一化官方界面、协调第三方插件视觉冲突（dsh-better-sidebar/dsh-widgets/dsh-genui）、修正设置页布局、聊天宽度/字号/缩放/字体/圆角卡片实时自定义 | `dsh plugin --profile web add dsh-ui-harmonizer` | MIT |
 | [pitetow/dsh-notify-on-complete](https://github.com/pitetow/dsh-notify-on-complete) | Zero-dependency desktop notifications when a run finishes, the model asks a question, or approval is pending. | `` | MIT |
 | [Player-MINEPIG/dsh-tavern](https://github.com/Player-MINEPIG/dsh-tavern) | DSH 酒馆式对话 UI 主题/界面插件。 | `` | MIT |
 | [poplarity/dsh-science-workbench](https://github.com/poplarity/dsh-science-workbench) | 可复现科学工作台 | `` | MIT |

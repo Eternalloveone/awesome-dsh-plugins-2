@@ -144,6 +144,7 @@
 | [chaojixinren/dsh-reviewer-bot](https://github.com/chaojixinren/dsh-reviewer-bot) | 原生 DSH 跨平台代码评审机器人插件（cordis.patch.yml + dsh plugin --profile web add @dshrb/bundle） | `` | MIT |
 | [chenw2759-wq/dsh-mindmap](https://github.com/chenw2759-wq/dsh-mindmap) | 思维导图模式 | `` | N/A |
 | [CHplus0/dsh-learning-mode](https://github.com/CHplus0/dsh-learning-mode) | DSH 学习模式插件，调整 agent 行为以辅助学习。 | `` | MIT |
+| [chumingjun/dsh-harness-one](https://github.com/chumingjun/dsh-harness-one) | 可视化多智能体工作流编排：React Flow 画布 8 种节点、SSE 实时监控、断点续跑、cron/webhook/对话多入口、飞书消息推送与文档读写、workflow_* 工具族 | `dsh plugin --profile web add dsh-harness-one && dsh plugin --profile web add dsh-better-sidebar && dsh web` | MIT |
 | [chunsi-w/dsh-trajectory-governor](https://github.com/chunsi-w/dsh-trajectory-governor) | DSH 闭环 Agent 轨迹控制平面：阶段判断、工具限制、验证债务、本地账本。 | `` | MIT |
 | [cirelir/dsh-change-review](https://github.com/cirelir/dsh-change-review) | DSH 变更审查插件，对代码/配置改动做评审。 | `` | MIT |
 | [cking000bigdemon/dsh-toolbelt](https://github.com/cking000bigdemon/dsh-toolbelt) | 八个插件：general-agent-prompt 人设、language-guard 语言守卫、vision-fallback 视觉回退、python/windows 写入守卫、cross-agent-memory 记忆桥接、image-generation 生图、skill-shell-injection 技能内 shell 命令替换 | `dsh plugin --profile <名称> add github:cking000bigdemon/dsh-toolbelt` | MIT; skill-shell-injection 会在受信技能根目录执行 SKILL.md 中的 shell 命令；cross-agent-memory 读取 home 目录下 Claude Code/Codex 记忆文件并注入；image-generation 使用生图 API 凭据；python/windows 守卫拦截/放行 shell 调用。 |
