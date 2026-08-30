@@ -13,9 +13,9 @@
   "Only the first 1000 search results are available"); ~9,500 tail repos are never seen by a
   plain `sort=stars` query. **SOLVED by `scripts/full_topic_scan.py`** (in the
   dsh-topic-curator skill dir): partitions the topic into disjoint sub-queries — star tiers for
-  `stars>10` (6 tiers, all <1000) + the `stars:<=10` remainder split by `created:` month
-  (single-sided `created:YYYY-MM`), an overflowing month split into its days and a day into
-  24 adjacent hour buckets — so every leaf is fully retrievable.
+  `stars>10` (6 tiers, all <1000) + the `stars:<=10` remainder split by `created:` year
+  through 2024 and month from 2025 onward, with overflowing periods split into days and
+  hours — so every leaf is fully retrievable.
   **GOTCHA (measured 2026-08-23):** day-level `created:A..B` is END-INCLUSIVE
   (`created:2026-08-13..2026-08-14` = 522+1702 = both days, exact). Query a single day as
   `D..D`, a month as single-sided `YYYY-MM`, hours as adjacent buckets `T00..T01, T01..T02, …`
@@ -23,7 +23,7 @@
   sub-filters are ignored in compound queries — `created:` is the only reliable dimension.
   Dry-run prints the partition plan; `--execute` fetches all (rate-limited, ~9 min). Outputs
   `/tmp/dsh_topic_full.json` (rich) + `/tmp/dsh_topic_repos.json` (diff_topic.py-compatible).
-- **Diff:** `python3 scripts/diff_topic.py /tmp/topic_repos.json --catalog-dir data --star-floor 10`
+- **Diff:** `python3 .workbuddy/skills/dsh-topic-curator/scripts/diff_topic.py /tmp/topic_repos.json --catalog-dir data --star-floor 10`
   writes `/tmp/dsh_new_repos.json` with `above_floor` / `skipped` arrays of `[name, stars]`.
   Floor rule = skip stars ≤ 10 ("10 个 star 内的先不处理").
 - **Verdict vocabulary (gotcha):** agent-prompt.md uses
@@ -56,8 +56,9 @@
     `sources` = `topic-candidate-snapshot|verified`. Add ONLY `main_dir==true` (loadable) plugins.
   - `dsh-plugin-topic-candidates.csv` columns: repository,topic,review_status.
     `topic` = `dsh-plugin`; add ALL new repos with their `review_status`.
-- **Merge order:** backup `data/*.csv` → `merge_audit_verdicts.py <verdicts...>` (audit + verified)
-  → append script (repositories + candidates) → `generate_docs.py` (README index + 44 category pages).
+- **Merge order:** validate scan summary and review set → `merge_audit_verdicts.py --topic-repos ...`
+  (backup plus atomic update of all four CSVs) → `aggregate.py --render-only` →
+  `generate_docs.py --strict` (README index + 44 category pages).
 - **Website ingestion (adapted 2026-08-19):** deepseekharnessplugins.com's `OUR_SOURCE` IS our own
   repo. Since README became an index, the site's `sync-plugins.ts` now fetches the **22
   `docs/categories/<id>.md` pages** (CN, raw.githubusercontent.com/cccakeee/awesome-dsh-plugins/main/docs/categories/<id>.md),
@@ -68,4 +69,18 @@
   object keys are case-sensitive → any ASCII inside a SECTION_MAP key must be lowercase
   (`web 界面与前端`, `mcp 与协议`, `聊天与 im`, `agent、自动化与工作流` — NOT `Web`/`MCP`/`IM`/`Agent`).
   Mixed-case keys silently drop whole pages (lost 473 entries on first sync attempt).
-- **Commit locally, push pending user confirmation.**
+- **Automation publishing:** only commit and push after all gates pass and the data refresh has
+  real changes. Infrastructure repairs must be committed to `origin/main` before the next
+  scheduled worktree is created.
+
+## Run log
+
+- **2026-08-30 (weekly / Sunday, Asia/Shanghai):** full scan coverage passed with
+  `coverage_ok=true`, `planned/completed=43/43`, `failures=[]`, `over_cap=[]`, and 12,661
+  unique repositories (`count_queries=170`, `fetch_queries=142`, `leaves=142`). Star floor was
+  10; `above_floor=20`, `skipped=10,445`. Verdicts: 15 `verified_plugin`, 1 `verified_skill`,
+  1 `watchlist`, 3 `related`, 0 `rejected`. Atomic merge added 16 rows to
+  `repositories.csv`, 20 to `dsh-plugin-topic-candidates.csv`, 20 to `audit-results.csv`, and
+  16 to `verified-plugins.csv`. Backup: `/tmp/dsh-curator-backup-wxztnda4`. Verification passed:
+  `aggregate.py --render-only`, `generate_docs.py --strict` (`unmapped=[]`), 9 unittest cases,
+  py_compile, `git diff --check`, and case-insensitive duplicate-key checks for all four tables.
