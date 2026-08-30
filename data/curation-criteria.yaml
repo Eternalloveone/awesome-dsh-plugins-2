@@ -1,5 +1,5 @@
-schema_version: 1
-last_updated: 2026-08-13
+schema_version: 2
+last_updated: "2026-08-30"
 scope:
   title: DeepSeek Harness community extensions
   include:
@@ -10,6 +10,8 @@ scope:
     - Projects that merely support the DeepSeek API or DeepSeek models.
     - Projects relying only on the dsh-plugin/dsh topic as evidence.
     - Tutorials, launchers, desktop shells, generic libraries, and aggregate lists without a DSH load path.
+    - Forks or mirrors of the core DeepSeek Harness runtime rather than extensions.
+    - Plugins for other agent runtimes without a concrete DSH load path.
     - Projects with no public source, no identifiable purpose, or materially misleading claims.
 verification:
   required_fields:
@@ -27,12 +29,39 @@ verification:
     - package.json dsh.bundle or dsh.profile declaration.
     - cordis.patch.yml or equivalent DSH patch that mounts the project.
     - A documented Cordis apply entry using DSH-compatible dependencies.
+    - A concrete DSH-discoverable SKILL.md entry with reproducible installation.
   labels:
-    verified: Native DSH loading evidence and a reproducible install or mounting path were inspected.
-    skill: A DSH skill path/entry point was inspected; this is not an assertion of native bundle status.
+    verified_plugin: Native DSH loading evidence and a reproducible install or mounting path were inspected.
+    verified_skill: A DSH skill path/entry point and reproducible installation were inspected; this is not an assertion of native bundle status.
     watchlist: Related project with incomplete or untested compatibility evidence.
     related: Ecosystem-adjacent project that is not a DSH-loadable plugin.
-    excluded: Out of scope, unavailable, misleading, or unsafe for inclusion.
+    rejected: Out of scope, unavailable, misleading, or unsafe for inclusion.
+  primary_evidence:
+    - GitHub repository metadata including canonical name, fork status, archived state, license, topics, language, and pushed_at.
+    - README installation and usage instructions.
+    - package.json DSH fields and DSH/Cordis dependencies when present.
+    - cordis.patch.yml, equivalent manifest, concrete apply entry, or DSH SKILL.md entry.
+    - Exact reproducible installation or mounting instructions for verified entries.
+  main_directory_verdicts:
+    - verified_plugin
+    - verified_skill
+  review_categories:
+    - ui
+    - vision
+    - automation
+    - desktop
+    - memory
+    - mcp
+    - agent_orchestration
+    - developer_tools
+    - data_tools
+    - security
+    - chat_integration
+    - skills
+    - launcher
+    - list
+    - legal
+    - other
 risk_levels:
   high:
     - browser session, cookie, or authenticated-page access

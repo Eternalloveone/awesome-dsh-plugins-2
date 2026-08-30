@@ -1,7 +1,8 @@
-# CSV schemas (append-only; preserve exact column order)
+# CSV schemas (preserve exact column order)
 
-All three files live in `data/`. Append with `csv.DictWriter` using these fieldnames in
-this order. Never overwrite existing rows.
+All four files live in `data/`. `scripts/merge_audit_verdicts.py` validates the
+headers, existing primary keys, and complete proposed output before replacing the
+tables. Do not append or rewrite these tables manually.
 
 ## repositories.csv — MAIN directory (genuine DSH-loadable extensions)
 
@@ -19,8 +20,8 @@ full_name,html_url,description,category,stars,license,language,topics,pushed_at,
 - `stars` — integer string.
 - `license` — SPDX id if visible (e.g. `MIT`, `Apache-2.0`); note proprietary/EULA explicitly.
 - `language` — primary language.
-- `topics` — comma-separated GitHub topics.
-- `pushed_at` — ISO date of last push (`YYYY-MM-DD`).
+- `topics` — pipe-separated GitHub topics.
+- `pushed_at` — ISO date or timestamp of last push.
 - `homepage` — project homepage URL or empty.
 - `verified` — `True` / `False`.
 - `sources` — provenance, e.g. `topic-new|agent-review`.
@@ -56,3 +57,25 @@ repository,url,kind,category,install_or_usage,license,last_activity,verification
 - `checked_at` — ISO date the review was done.
 - `capability` — short description of what it does.
 - `caution` — risks / caveats for a curator (license traps, external calls, etc.).
+
+## audit-results.csv — review evidence for every processed repo
+
+```
+repo,verdict,reason,capability,install_cmd,license,risk_level,risk_note,category,evidence,checked_at
+```
+
+- `repo` — `owner/repo` and the case-insensitive deduplication key.
+- `verdict` — `verified_plugin`, `verified_skill`, `watchlist`, `related`, or `rejected`.
+- `reason` / `capability` — concise classification and actual behavior.
+- `install_cmd` — exact install or mount command when one exists.
+- `license`, `risk_level`, `risk_note`, `category`, `evidence`, `checked_at` — the
+  reviewed metadata and primary evidence.
+
+## Merge invariants
+
+- Review repositories must exactly equal `above_floor` from `/tmp/dsh_new_repos.json`;
+  missing, duplicate, or extra reviews fail before writing.
+- Only `verified_plugin` and `verified_skill` may set `main_dir=true` and enter
+  `repositories.csv` plus `verified-plugins.csv`.
+- Every reviewed repository enters the candidate and audit tables.
+- Existing primary keys are checked case-insensitively; conflicting rows fail.

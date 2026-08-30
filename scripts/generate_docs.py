@@ -18,7 +18,9 @@ Usage:
   python3 scripts/generate_docs.py            # write in place
   python3 scripts/generate_docs.py --dry /tmp # write to /tmp (README*.new.md + categories/)
 """
+import argparse
 import csv
+import datetime as dt
 import os
 import re
 import sys
@@ -26,7 +28,6 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CAT_DIR = os.path.join(ROOT, "docs", "categories")
 SITE = "https://deepseekharnessplugins.com"
-SNAPSHOT_DATE = "2026-08-22"
 TOP_N = 10  # featured rows shown per category inside the README index
 
 # 22 categories in the website's order (id, zh, en). ids == site route params.
@@ -160,17 +161,19 @@ def build_row(r, lang):
 
 
 def load():
-    rows = list(csv.DictReader(
-        open(os.path.join(ROOT, "data", "verified-plugins.csv"), encoding="utf-8")))
+    verified_path = os.path.join(ROOT, "data", "verified-plugins.csv")
+    with open(verified_path, newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
     cap = [r for r in rows if (r.get("capability") or "").strip()]
     seen = {}
     assigned = {cid: [] for cid in CAT_IDS}
     unmapped = []
     for r in cap:
         repo = r["repository"]
-        if repo in seen:
+        key = repo.lower()
+        if key in seen:
             continue
-        seen[repo] = True
+        seen[key] = True
         slug = (r.get("category") or "").strip()
         cid = SLUG_MAP.get(slug)
         if cid is None or cid not in assigned:
@@ -182,7 +185,27 @@ def load():
     for cid in assigned:
         assigned[cid].sort(key=lambda r: r["repository"].lower())
         assigned[cid].sort(key=lambda r: r.get("last_activity") or "", reverse=True)
-    return assigned, len(seen), unmapped
+
+    checked_dates = [
+        (r.get("checked_at") or "")[:10]
+        for r in cap
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", (r.get("checked_at") or "")[:10])
+    ]
+    snapshot_date = max(checked_dates, default=dt.date.today().isoformat())
+
+    repositories_path = os.path.join(ROOT, "data", "repositories.csv")
+    with open(repositories_path, newline="", encoding="utf-8") as handle:
+        repository_rows = list(csv.DictReader(handle))
+    repository_keys = [
+        (row.get("full_name") or "").strip().lower()
+        for row in repository_rows
+    ]
+    if any(not key for key in repository_keys):
+        raise ValueError(f"{repositories_path}: empty full_name")
+    if len(repository_keys) != len(set(repository_keys)):
+        raise ValueError(f"{repositories_path}: duplicate full_name")
+
+    return assigned, len(seen), unmapped, snapshot_date, len(repository_keys)
 
 
 # ---- category pages ---------------------------------------------------------
@@ -236,12 +259,12 @@ def write_category_docs(assigned, dry, outdir):
 
 
 # ---- README index -----------------------------------------------------------
-def build_nav(lang):
+def build_nav(lang, catalog_total):
     if lang == "cn":
         nav = [
             "| 导航 | 内容 |",
             "| --- | --- |",
-            "| [全量聚合目录](#全量聚合目录) | **2296 个** DSH 相关仓库的完整聚合（含未审核候选）；[审计日志](data/audit-results.csv) |",
+            f"| [全量聚合目录](#全量聚合目录) | **{catalog_total} 个** DSH 相关仓库的完整聚合（含未审核候选）；[审计日志](data/audit-results.csv) |",
         ]
         cats = " · ".join(f"[{zh}](docs/categories/{cid}.md)" for cid, zh, _ in CATEGORIES)
         nav.append(f"| 分类目录（完整清单） | {cats} |")
@@ -255,7 +278,7 @@ def build_nav(lang):
         nav = [
             "| Navigation | Purpose |",
             "| --- | --- |",
-            "| [Full aggregated catalog](#full-aggregated-catalog) | **All 2,296** DSH-related repositories, including unreviewed candidates; [audit log](data/audit-results.csv) |",
+            f"| [Full aggregated catalog](#full-aggregated-catalog) | **All {catalog_total:,}** DSH-related repositories, including unreviewed candidates; [audit log](data/audit-results.csv) |",
         ]
         cats = " · ".join(f"[{en}](docs/categories/{cid}.en.md)" for cid, _, en in CATEGORIES)
         nav.append(f"| Category pages (full listings) | {cats} |")
@@ -268,7 +291,8 @@ def build_nav(lang):
     return "\n".join(nav)
 
 
-def regen_readme(text, lang, assigned, total, unmapped):
+def regen_readme(text, lang, assigned, total, unmapped, snapshot_date,
+                 catalog_total):
     if lang == "cn":
         heading = "## 已核验插件目录"
         intro = ("下列条目已核验至少一个原生特征：可复现的 `dsh plugin` 安装命令、"
@@ -296,7 +320,10 @@ def regen_readme(text, lang, assigned, total, unmapped):
         tail = lambda n, cid: (f"> This category has **{n}** verified entries, "
                                f"[view the full list →](docs/categories/{cid}.en.md)")
 
-    blocks = [heading, "", intro.rstrip("\n"), "", build_nav(lang), ""]
+    blocks = [
+        heading, "", intro.rstrip("\n"), "",
+        build_nav(lang, catalog_total), "",
+    ]
     for cid, zh, en in CATEGORIES:
         name = zh if lang == "cn" else en
         rows = assigned.get(cid, [])
@@ -332,22 +359,33 @@ def regen_readme(text, lang, assigned, total, unmapped):
     text = "\n".join(lines)
 
     # ---- badge + snapshot paragraph ----
+    text = re.sub(r"catalog-\d+", f"catalog-{catalog_total}", text)
     text = re.sub(r"verified-\d+", f"verified-{total}", text)
     if lang == "cn":
-        new_snap = (f"**快照日期：{SNAPSHOT_DATE}。** 本版主目录收录 **{total} 个**"
+        text = re.sub(
+            r"\*\*[\d,]+ 个\*\* DSH 相关仓库",
+            f"**{catalog_total} 个** DSH 相关仓库",
+            text,
+        )
+        new_snap = (f"**快照日期：{snapshot_date}。** 本版主目录收录 **{total} 个**"
                     "经源码或安装清单核验的插件与 Skill，按 22 个能力分类组织（与配套网站 "
                     "[deepseekharnessplugins.com](https://deepseekharnessplugins.com) 同构）；"
                     "完整清单已拆分到 [`docs/categories/`](docs/categories/) 的 22 个分类页面。"
-                    "同时提供 **全量聚合目录 [`CATALOG.md`](CATALOG.md)（2296 个仓库）**，合并 GitHub 搜索与多个社区目录去重后得到。"
+                    f"同时提供 **全量聚合目录 [`CATALOG.md`](CATALOG.md)（{catalog_total} 个仓库）**，合并 GitHub 搜索与多个社区目录去重后得到。"
                     "**聚合 ≠ 可装载、可兼容、可安全运行**；只有本目录核验子集进入主目录，证据见 "
                     "[data/verified-plugins.csv](data/verified-plugins.csv) 与 [data/audit-results.csv](data/audit-results.csv)。[3]")
     else:
-        new_snap = (f"**Snapshot: {SNAPSHOT_DATE}.** This edition's main directory includes "
+        text = re.sub(
+            r"\*\*All [\d,]+\*\* DSH-related repositories",
+            f"**All {catalog_total:,}** DSH-related repositories",
+            text,
+        )
+        new_snap = (f"**Snapshot: {snapshot_date}.** This edition's main directory includes "
                     f"**{total} verified plugins and skills whose source or install manifests were inspected**, "
                     "organized into 22 capability categories (aligned with the companion site "
                     "[deepseekharnessplugins.com](https://deepseekharnessplugins.com)); the full listing is split "
                     "into 22 category pages under [`docs/categories/`](docs/categories/). Plus a **full aggregated "
-                    "catalog — [`CATALOG.md`](CATALOG.md), 2,296 repositories** — merged and deduplicated from GitHub "
+                    f"catalog — [`CATALOG.md`](CATALOG.md), {catalog_total:,} repositories** — merged and deduplicated from GitHub "
                     "search and several community directories. **Aggregation is not an installation, compatibility, "
                     "maintenance, or security certification**; only the verified subset enters the main directory, with "
                     "evidence in [data/verified-plugins.csv](data/verified-plugins.csv) and "
@@ -358,15 +396,36 @@ def regen_readme(text, lang, assigned, total, unmapped):
     return text, total, unmapped
 
 
-def main():
-    dry = "--dry" in sys.argv
-    outdir = sys.argv[sys.argv.index("--dry") + 1] if dry else None
-    assigned, total, unmapped = load()
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--dry", metavar="OUTPUT_DIR",
+        help="write README previews and category pages outside the repository",
+    )
+    parser.add_argument(
+        "--strict", action="store_true",
+        help="fail before writing when any verified category is unmapped",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    dry = args.dry is not None
+    outdir = args.dry
+    assigned, total, unmapped, snapshot_date, catalog_total = load()
+    if args.strict and unmapped:
+        print(f"[error] unmapped categories: {sorted(set(unmapped))}")
+        return 2
+    if dry:
+        os.makedirs(outdir, exist_ok=True)
     write_category_docs(assigned, dry, outdir)
     for lang, fn in [("cn", "README.md"), ("en", "README.en.md")]:
         path = os.path.join(ROOT, fn)
         text = open(path, encoding="utf-8").read()
-        new_text, count, unm = regen_readme(text, lang, assigned, total, unmapped)
+        new_text, count, unm = regen_readme(
+            text, lang, assigned, total, unmapped, snapshot_date, catalog_total
+        )
         if dry:
             out = os.path.join(outdir, fn.replace(".md", ".new.md"))
             open(out, "w", encoding="utf-8").write(new_text)
@@ -374,8 +433,13 @@ def main():
         else:
             open(path, "w", encoding="utf-8").write(new_text)
             print(f"[{lang}] {fn}: written, verified={count}, unmapped={sorted(set(unm))}")
-    print(f"[done] category pages: {len(CATEGORIES) * 2} files, verified total={total}")
+    print(
+        f"[done] category pages: {len(CATEGORIES) * 2} files, "
+        f"verified total={total}, catalog total={catalog_total}, "
+        f"snapshot={snapshot_date}, unmapped={sorted(set(unmapped))}"
+    )
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

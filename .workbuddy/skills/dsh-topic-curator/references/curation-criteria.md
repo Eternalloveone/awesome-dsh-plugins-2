@@ -22,14 +22,29 @@ for review agents and the merge step.
 
 ## Verification labels
 
-- `verified` — Native DSH loading evidence **and** a reproducible install / mount path were
+- `verified_plugin` — Native DSH loading evidence **and** a reproducible install / mount path were
   inspected (documented `dsh plugin --profile`, `package.json` `dsh.bundle`/`dsh.profile`,
   `cordis.patch.yml`, or a Cordis apply entry with DSH-compatible deps).
-- `skill` — A DSH skill path / entry point was inspected (not an assertion of native bundle
-  status).
+- `verified_skill` — A concrete DSH skill path / entry point and reproducible installation
+  were inspected (not an assertion of native bundle status).
 - `watchlist` — Related project with incomplete or untested compatibility evidence.
 - `related` — Ecosystem-adjacent project that is **not** a DSH-loadable plugin.
-- `excluded` — Out of scope, unavailable, misleading, or unsafe.
+- `rejected` — Out of scope, unavailable, misleading, or unsafe.
+
+Only `verified_plugin` and `verified_skill` belong in the main directory. A real load path
+does not override a `rejected` decision for unsafe or materially misleading behavior.
+
+## Required primary evidence
+
+- Repository metadata, including canonical name, fork/archived status, license, topics,
+  language, and last push.
+- README installation and usage instructions.
+- `package.json` DSH fields and relevant DSH/Cordis dependencies when present.
+- `cordis.patch.yml`, equivalent manifest, concrete apply entry, or DSH `SKILL.md` entry.
+- An exact reproducible installation or mounting command for verified verdicts.
+
+Topic membership, a repository description, or an unverified README claim is never enough
+on its own.
 
 ## Risk levels
 

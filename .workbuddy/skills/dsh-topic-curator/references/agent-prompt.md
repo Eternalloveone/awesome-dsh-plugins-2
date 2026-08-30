@@ -1,59 +1,88 @@
 # Review-agent prompt template
 
-Copy this template for each new repo discovered above the star floor. Launch one
-`general-purpose` agent per repo, **in parallel**. Replace the `<PLACEHOLDERS>`.
+Use one review agent for a batch of at most six repositories. Run no more than
+three agents concurrently. Replace `<REPOSITORIES>` and `<OUTPUT_JSON>`.
 
 ```text
-You are helping curate a catalog of DeepSeek Harness (DSH) community extensions.
-Investigate ONE GitHub repo and return a structured catalog entry. DO NOT write any
-files — just return the report in the format at the end.
+You are reviewing a small batch of GitHub repositories for the DeepSeek Harness
+(DSH) community catalog.
 
-REPO: <https://github.com/OWNER/REPO>
-REPORTED STAR COUNT: ~<STARS>
+REPOSITORIES (owner/repo and reported stars):
+<REPOSITORIES>
 
-Context — our curation criteria:
-- INCLUDE: public-source projects with reproducible DSH install/mount instructions;
-  Cordis/DSH bundles (package.json dsh fields, cordis.patch.yml, or a documented
-  `dsh plugin --profile` command); DSH-discoverable skills.
-- EXCLUDE from the MAIN directory (mark as "related" or "excluded" instead): projects
-  that merely support the DeepSeek API/models; those relying only on the dsh-plugin
-  topic tag; tutorials, launchers, DESKTOP SHELLS, generic libraries, and AGGREGATE
-  LISTS without a DSH load path; forks of the core harness itself; non-DSH plugins
-  (e.g. Claude Code plugins); misleading or unsafe projects.
-- Verification labels: verified (native DSH loading evidence + reproducible install),
-  skill (DSH skill path inspected), watchlist (incomplete/untested compat), related
-  (ecosystem-adjacent, NOT DSH-loadable), excluded (out of scope).
-- Risk levels: high (browser session/cookie access, SSH/SFTP/remote exec, external
-  chat/IM, privileged creds), medium (external API calls, filesystem/workspace reads,
-  task automation, API keys), low (local UI/TUI/theme/client display changes).
+OUTPUT_JSON: <OUTPUT_JSON>
 
-Your task:
-1. WebFetch the repo main page and its README to learn what it actually is. Be skeptical
-   of generic names — they are often forks, mirrors, tutorials, or skeletons.
-2. Determine whether it is a genuine DSH plugin/skill/tool WITH A REAL DSH LOAD PATH, or
-   an adjacent/standalone project (awesome-list, launcher, desktop shell, core-harness
-   fork, Claude Code plugin, generic library).
-3. Decide the verdict and whether it belongs in the MAIN directory (repositories.csv) or
-   only the candidate list.
-4. Gather: description, category (skills|vision|automation|desktop|ui|memory|mcp|agent-os|
-   launcher|list|legal|other), license (SPDX id if visible), primary language, homepage,
-   whether a DSH load path exists and how, install/usage command or instructions,
-   last-push date (ISO if findable), and an honest risk level.
+Review every repository in this batch. Do not modify the checked-out project.
+Write one top-level JSON array to OUTPUT_JSON, with exactly one object for every
+input repository and no extra objects. Do not wrap the JSON in Markdown.
 
-Return EXACTLY this format (fill every line; use "N/A" if truly unknown):
-REPO: <owner/repo>
-VERDICT: <verified|skill|watchlist|related|excluded>
-MAIN_DIR: <yes|no>
-DESCRIPTION: <one line>
-CATEGORY: <category>
-LICENSE: <license>
-LANGUAGE: <language>
-HOMEPAGE: <url or empty>
-DSH_LOAD_PATH: <yes|no — how>
-INSTALL_OR_USAGE: <command/instructions or empty>
-RISK_LEVEL: <high|medium|low>
-TOPICS: <comma-separated>
-PUSHED_AT: <ISO date or empty>
-NOTES: <anything important for a curator — especially whether this looks like a
-fork/mirror/skeleton/tutorial/non-DSH plugin>
+Use primary evidence. At minimum inspect:
+1. GitHub metadata: canonical owner/name, fork status, archived state, default
+   branch, star count, language, license, topics, and pushed_at.
+2. README installation and usage instructions.
+3. package.json, especially dsh, dsh.bundle, dsh.profile, exports, and DSH/Cordis
+   dependencies.
+4. cordis.patch.yml or an equivalent manifest/patch, a concrete plugin apply
+   entry, or a DSH-discoverable SKILL.md entry.
+5. The exact reproducible install or mount command for anything verified.
+
+A topic, repository description, README claim, package name, or generic
+DeepSeek-model support is not enough by itself. Check whether the repository is a
+fork or mirror of the core harness, an aggregate list, desktop shell/launcher,
+tutorial, non-DSH plugin, or unsafe/misleading project.
+
+Use these verdicts:
+- verified_plugin: native DSH/Cordis load evidence plus reproducible install or
+  mount path; main_dir must be true.
+- verified_skill: concrete DSH-discoverable skill entry plus reproducible
+  installation; main_dir must be true.
+- watchlist: plausible but incomplete or untested compatibility; main_dir false.
+- related: ecosystem-adjacent but not DSH-loadable; main_dir false.
+- rejected: out of scope, unavailable, misleading, unsafe, or otherwise
+  unsuitable; main_dir false.
+
+Use one category from: ui, vision, automation, desktop, memory, mcp,
+agent_orchestration, developer_tools, data_tools, security, chat_integration,
+skills, launcher, list, legal, other.
+
+Risk levels:
+- high: browser sessions/cookies, SSH/SFTP/remote execution, external chat/IM
+  triggers, privileged credentials, or production infrastructure.
+- medium: external APIs, filesystem/workspace reads or writes, task automation,
+  API keys, budgets, or account data.
+- low: local UI/TUI/theme/display behavior without elevated capabilities.
+
+Every object must contain exactly these fields:
+{
+  "repo": "owner/repo",
+  "verdict": "verified_plugin|verified_skill|watchlist|related|rejected",
+  "main_dir": true,
+  "reason": "concise classification reason",
+  "description": "one-line repository description",
+  "capability": "one-line user-facing capability",
+  "category": "ui",
+  "kind": "installable_dsh_plugin",
+  "install_or_usage": "exact command or instructions; empty when unverified",
+  "license": "SPDX id or Not found",
+  "language": "primary language or empty",
+  "homepage": "URL or empty",
+  "dsh_load_path": "specific positive or negative finding",
+  "risk_level": "low|medium|high",
+  "risk_note": "why this risk level applies",
+  "topics": ["topic-one", "topic-two"],
+  "pushed_at": "2026-08-29T00:00:00Z",
+  "evidence": "files/metadata inspected and decisive facts",
+  "caution": "important caveat or empty",
+  "checked_at": "YYYY-MM-DD"
+}
+
+For kind, use installable_dsh_plugin, dsh_skill, cordis_bundle, or other. A
+verified object requires a non-empty kind, pushed_at, install_or_usage, and
+positive dsh_load_path. Unverified objects may leave kind, pushed_at, and
+install_or_usage empty when primary metadata is unavailable, but still explain
+the negative finding. Use N/A only when a value is genuinely unknown.
+
+If a repository cannot be fetched, return a rejected object with main_dir false
+and explain the failure in reason, dsh_load_path, and evidence. Before finishing,
+parse OUTPUT_JSON and verify its repository set exactly matches the input batch.
 ```
